@@ -1,9 +1,3 @@
-/**
- * CourseLink+ Popup JS
- * Reads/writes settings from localStorage,
- * syncs toggles, and tells the active tab to update.
- */
-
 const DEFAULTS = {
   darkMode:       false,
   gradeCalc:      true,
@@ -46,11 +40,9 @@ function initPopup() {
     const el = document.getElementById(`pref-${key}`);
     if (!el) return;
 
-    // Make the whole toggle-item row clickable
     const row = el.closest('.toggle-item');
     if (row) {
       row.addEventListener('click', e => {
-        // Avoid double-toggle when user directly clicks the checkbox/label
         if (e.target === el || e.target.classList.contains('toggle-slider') || e.target.classList.contains('toggle-switch')) return;
         el.checked = !el.checked;
         handleChange(key, el.checked, settings);
@@ -68,8 +60,6 @@ function handleChange(key, value, settings) {
   saveSettings(settings);
   if (key === 'darkMode') applyPopupTheme(settings);
 
-  // Also push into the active tab's content script via window.postMessage
-  // (works when the popup and page are in the same browser session)
   try {
     if (typeof chrome !== 'undefined' && chrome.tabs) {
       chrome.tabs.query({ active: true, currentWindow: true }, tabs => {

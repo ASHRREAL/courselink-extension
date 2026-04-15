@@ -1,10 +1,3 @@
-/**
- * CourseLink+ Content Script v2
- * Fixes: dark mode (overrides D2L tokens), smart OU detection,
- * removed deadline ticker, fixed assignment row styling,
- * UI polish infused into the page.
- */
-
 (function () {
   'use strict';
 
@@ -32,27 +25,18 @@
 
   let settings = getSettings();
 
-  /* ─────────────────────────────────────────────────────────
-     ORG UNIT ID DETECTION
-     Priority: JS Global var → URL param → URL path → data attr
-  ───────────────────────────────────────────────────────── */
   function getOrgUnitId() {
-    // 1. D2L injects a Global JS object with OrgUnitId
     try {
       if (window.Global && window.Global.OrgUnitId && window.Global.OrgUnitId !== 6605) {
         return String(window.Global.OrgUnitId);
       }
     } catch {}
 
-    // 2. URL query ?ou=XXXX
     const ouParam = new URLSearchParams(window.location.search).get('ou');
     if (ouParam) return ouParam;
-
-    // 3. URL path e.g. /d2l/le/content/1022413/...
     const pathMatch = window.location.pathname.match(/\/d2l\/\w+\/\w+\/(\d{5,})\//);
     if (pathMatch) return pathMatch[1];
 
-    // 4. data-global-context on <html>
     try {
       const ctx = document.documentElement.dataset.globalContext;
       if (ctx) {
@@ -96,15 +80,10 @@
 
   /* ─────────────────────────────────────────────────────────
      1. DARK MODE
-     Strategy: override D2L's own CSS custom properties on <html>
-     These cascade through shadow DOM automatically.
   ───────────────────────────────────────────────────────── */
   let darkStyleEl = null;
   let darkRefreshTimer = null;
 
-  // CSS injected into shadow roots — only propagate tokens + text color.
-  // We deliberately do NOT set background-color on :host because components
-  // like d2l-grade-result need their own colors to show grade scores.
   const DARK_SHADOW_CSS = `
     :host {
       --d2l-color-regolith: #1e2128;
@@ -554,7 +533,6 @@
     document.body.appendChild(btn);
   }
 
-  /* QuickNav removed — user requested sidebar removal. Ctrl+K spotlight kept. */
 
   /* ─────────────────────────────────────────────────────────
      3. GRADE CALCULATOR — inline banner above the table
@@ -613,9 +591,6 @@
 
     const trs = scopeRoot.querySelectorAll('tbody tr, .d2l-table tr');
 
-    // Preferred path for D2L weighted gradebooks:
-    // top-level rows are rendered with <th colspan="2"> and represent category/standalone totals
-    // (Assignment, Labs, Final, Project, Midterm...).
     const topLevelRows = Array.from(trs).filter(tr => tr.querySelector('th[colspan="2"]'));
     if (topLevelRows.length) {
       topLevelRows.forEach(tr => {
@@ -630,8 +605,6 @@
         const pointsPair = pointsIdx >= 0 && cells[pointsIdx] ? parsePair(cells[pointsIdx].textContent) : null;
         const weightPair = weightAchievedIdx >= 0 && cells[weightAchievedIdx] ? parsePair(cells[weightAchievedIdx].textContent) : null;
 
-        // Use weight-achieved pair when present; otherwise accept points pair as fallback.
-        // Keep 0/x rows (e.g., Final 0/35) to show true achieved/total progress.
         const chosen = weightPair && weightPair.den > 0
           ? weightPair
           : (pointsPair && pointsPair.den > 0 ? pointsPair : null);
@@ -1042,9 +1015,6 @@
 
   /* ─────────────────────────────────────────────────────────
      5. ASSIGNMENT ROW STYLING
-     Instead of adding badge text (the page already shows ✓/★/○),
-     we style the table rows with a color-coded left border.
-     Detection based on what D2L actually puts in the row text.
   ───────────────────────────────────────────────────────── */
   function buildAssignmentRowStyle() {
     if (!settings.assignRowStyle) return;
