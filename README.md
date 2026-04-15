@@ -1,84 +1,29 @@
-# CourseLink+ Browser Extension
+# CourseLink+
 
-> **Supercharges the University of Guelph CourseLink (D2L Brightspace)** with features that reduce clicks, surface important info, and make the interface much more pleasant to use.
+Browser extension for University of Guelph's CourseLink (D2L Brightspace). Adds a dark mode, grade calculator, quick search, and a few other quality-of-life things.
 
----
+## Features
 
-## ✨ Features
+- **Dark Mode** — full dark theme that actually works with D2L's components. Toggle from the popup or click the button in the bottom-right corner on any page.
+- **Grade Calculator** — when you're on the Grades page, shows a banner with your weighted average, letter grade, and a "what-if" calculator to see what you'd need on remaining work.
+- **Ctrl+K Spotlight** — press `Ctrl+K` from any page to search and jump to sections (Grades, Assignments, Discussions, etc.).
+- **Assignment Row Colors** — on the Dropbox/Assignments page, graded rows get a green border, submitted rows get blue, and missing/not-submitted rows get red.
+- **Course Quick Access** — course cards on the homepage get shortcut buttons straight to Grades, Assignments, and Content for each course.
 
-| Feature | Description |
-|---------|-------------|
-| 🧭 **QuickNav Sidebar** | Fixed left-side panel with 1-click links to Grades, Assignments, Discussions, Content, Calendar |
-| ⏰ **Deadline Ticker** | Color-coded chip strip at the top showing upcoming due dates (🔴 <24h · 🟡 <3d · 🟢 ok) |
-| 📊 **Grade Calculator** | Floating card on the Grades page — shows weighted avg, letter grade, and a what-if slider |
-| ⌨️ **Ctrl+K Spotlight** | Press `Ctrl+K` anywhere to open a fast search/navigation overlay |
-| ✅ **Assignment Badges** | Color-coded `Submitted / Missing / Graded / Pending` tags on Dropbox pages |
-| ⚡ **Course Quick Access** | Jump straight to Grades, Assignments, Content from course cards on the homepage |
-| 🔔 **Notification Cleaner** | "Mark All Read" button on the notifications page |
-| 🌙 **Dark Mode** | Full dark theme toggle (bottom-right button or via popup settings) |
 
----
+## Settings
 
-## 🚀 Installation
+Click the **CL+** icon in your toolbar. All settings save automatically and persist across page loads.
 
-### Chrome / Chromium / Brave / Edge
-
-1. Open your browser and go to: `chrome://extensions/`
-2. Enable **Developer mode** (top-right toggle)
-3. Click **"Load unpacked"**
-4. Select the `courselink-extension` folder
-5. The **CL+** icon will appear in your toolbar ✅
-
-### Firefox
-
-1. Open Firefox and go to: `about:debugging`
-2. Click **"This Firefox"** on the left sidebar
-3. Click **"Load Temporary Add-on…"**
-4. Select the `manifest.json` file inside `courselink-extension/`
-5. The **CL+** icon will appear in your toolbar ✅
-
-> **Note:** Firefox temporary add-ons are removed when the browser closes. For persistent use, use Chrome/Chromium.
-
----
-
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+K` | Open quick-search spotlight |
+| `Ctrl+K` | Open search spotlight |
 | `Esc` | Close spotlight |
-| `↑` / `↓` | Navigate spotlight results |
+| `↑` / `↓` | Navigate results |
 | `↵` | Open selected result |
 
----
+## Privacy
 
-## ⚙️ Settings
-
-Click the **CL+** icon in your browser toolbar to open the settings popup.  
-All settings are saved automatically and persist across page loads.
-
----
-
-## 📁 File Structure
-
-```
-courselink-extension/
-  manifest.json      ← Extension definition (Manifest V3)
-  content.js         ← All features injected into CourseLink pages
-  content.css        ← All styles (dark mode, sidebar, cards, etc.)
-  popup.html         ← Settings popup UI
-  popup.css          ← Popup styles
-  popup.js           ← Popup logic
-  icons/
-    icon16.png
-    icon48.png
-    icon128.png
-```
-
----
-
-## 🔒 Privacy
-
-- **No data is sent anywhere.** All processing is local.
-- Settings are stored in `localStorage` — only accessible to the extension on `courselink.uoguelph.ca`.
-- No analytics, no tracking.
+No data leaves your machine. No analytics, no tracking, no external requests. Everything runs locally.

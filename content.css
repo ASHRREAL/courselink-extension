@@ -510,20 +510,6 @@ html[data-cl-dark] [class*="course-selector-item"].d2l-selected {
 }
 
 /* ═══════════════════════════════════════════════════
-   NOTIFICATION ENHANCEMENTS
-   ═══════════════════════════════════════════════════ */
-#cl-mark-all-read {
-  display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px;
-  background: linear-gradient(135deg, var(--cl-primary), var(--cl-primary-light));
-  color: #fff; border: none; border-radius: 20px; font-size: 12px;
-  font-weight: 600; cursor: pointer; margin: 10px 0;
-  font-family: var(--cl-font); transition: all var(--cl-transition);
-  box-shadow: 0 2px 8px rgba(200,16,46,0.3);
-}
-#cl-mark-all-read:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,16,46,0.4); }
-#cl-mark-all-read svg { width: 13px; height: 13px; }
-
-/* ═══════════════════════════════════════════════════
    DARK MODE TOGGLE BUTTON
    ═══════════════════════════════════════════════════ */
 #cl-dark-toggle {

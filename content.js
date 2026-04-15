@@ -17,7 +17,6 @@
     gradeCalc:      true,
     searchHotkey:   true,
     assignRowStyle: true,
-    notifEnhance:   true,
     quickAccess:    true,
   };
 
@@ -813,14 +812,6 @@
     const ou = getOrgUnitId();
     return [
       { title: 'My Home',            sub: 'Homepage',           href: '/d2l/home',                                                    icon: I.home },
-      // { title: 'My Grades',          sub: 'Overall grades',     href: ou ? `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}` : '/d2l/lms/grades/', icon: I.grades },
-      // { title: 'Assignments',        sub: 'Dropbox folders',    href: ou ? `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}` : '/d2l/lms/dropbox/', icon: I.upload },
-      // { title: 'Discussions',        sub: 'Discussion boards',  href: ou ? `/d2l/le/discussion/${ou}/list` : '/d2l/le/discussion/', icon: I.chat },
-      // { title: 'Notifications',      sub: 'Alerts & messages',  href: '/d2l/lp/alerts/notifications',                                 icon: I.bell },
-      // { title: 'Calendar',           sub: 'Events & deadlines', href: ou ? `/d2l/le/calendar/${ou}/undefined/unit/Home` : '/d2l/le/calendar/', icon: I.cal },
-      // { title: 'Classlist',          sub: 'Class roster',       href: ou ? `/d2l/lms/classlist/classlist.d2l?ou=${ou}` : '/d2l/lms/classlist/', icon: I.users },
-      // { title: 'Course Content',     sub: 'Modules & files',    href: ou ? `/d2l/le/content/${ou}/Home` : '/d2l/le/content/', icon: I.book },
-      // { title: 'Account Settings',   sub: 'Profile & prefs',    href: '/d2l/lp/account/settings',                                     icon: I.check },
     ];
   }
 
@@ -1092,30 +1083,6 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     6. NOTIFICATION ENHANCER
-  ───────────────────────────────────────────────────────── */
-  function buildNotifEnhancer() {
-    if (!settings.notifEnhance) return;
-    if (!isPage('/d2l/lp/alerts', 'notification')) return;
-    if (document.getElementById('cl-mark-all-read')) return;
-
-    setTimeout(() => {
-      const target = document.querySelector('main, #d2l_body, [class*="notification"], [class*="alert"]');
-      if (!target) return;
-
-      const btn = document.createElement('button');
-      btn.id = 'cl-mark-all-read';
-      btn.innerHTML = `${I.check} Mark All Read`;
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('button[title*="dismiss" i], button[aria-label*="dismiss" i], button[title*="read" i], [class*="dismiss"], [class*="mark-read"]')
-          .forEach(b => b.click());
-        btn.textContent = '✓ Done!';
-      });
-      target.insertAdjacentElement('afterbegin', btn);
-    }, 800);
-  }
-
-  /* ─────────────────────────────────────────────────────────
      7. COURSE CARD QUICK ACCESS (course selector dropdown + course page)
   ───────────────────────────────────────────────────────── */
   function buildCourseCardQuickAccess() {
@@ -1259,7 +1226,6 @@
     setTimeout(() => {
       buildGradeCalculator();
       buildAssignmentRowStyle();
-      buildNotifEnhancer();
       buildCourseCardQuickAccess();
     }, 700);
   }

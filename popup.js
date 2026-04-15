@@ -9,7 +9,6 @@ const DEFAULTS = {
   gradeCalc:      true,
   searchHotkey:   true,
   assignRowStyle: true,
-  notifEnhance:   true,
   quickAccess:    true,
 };
 
