@@ -954,18 +954,26 @@
       return;
     }
     container.innerHTML = filteredLinks.slice(0, 10).map((l, i) => `
-      <a href="${l.href}" class="cl-spotlight-result ${i === focusIdx ? 'cl-focused' : ''}" data-idx="${i}">
+      <div class="cl-spotlight-result ${i === focusIdx ? 'cl-focused' : ''}" data-idx="${i}" data-href="${l.href}">
         <div class="cl-spotlight-result-icon">${l.icon}</div>
         <div class="cl-spotlight-result-text">
           <div class="cl-spotlight-result-title">${l.title}</div>
           <div class="cl-spotlight-result-sub">${l.sub}</div>
         </div>
         <div style="opacity:0.3">${I.arrow}</div>
-      </a>`).join('');
+      </div>`).join('');
 
-    container.querySelectorAll('.cl-spotlight-result').forEach(el => {
-      el.addEventListener('mouseenter', () => { focusIdx = +el.dataset.idx; renderSpotlightResults(document.getElementById('cl-spotlight-input')?.value || '', currentLinks, false); });
-    });
+    // Use event delegation on the container (replace handler each time)
+    container.onclick = e => {
+      const result = e.target.closest('.cl-spotlight-result');
+      if (result) {
+        const href = result.dataset.href;
+        if (href) {
+          window.location.href = href;
+          closeSpotlight();
+        }
+      }
+    };
 
     const focused = container.querySelector('.cl-focused');
     if (focused) focused.scrollIntoView({ block: 'nearest' });
