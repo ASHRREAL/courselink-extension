@@ -92,6 +92,7 @@
     arrow:   svg('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>'),
     moon:    svg('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'),
     sun:     svg('<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'),
+    quiz: svg('<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>'),
   };
 
   /* ─────────────────────────────────────────────────────────
@@ -749,8 +750,7 @@
         </div>
       </div>`;
 
-    // Place banner next to the "Add to ePortfolio" button
-    // D2L renders a button/link container right below the page title
+    // Locate the "Add to ePortfolio" button or its container
     const buttons = Array.from(document.querySelectorAll('button, a.d2l-button'));
     let portfolioBtn = buttons.find(b => b.textContent && b.textContent.includes('ePortfolio'));
     
@@ -758,31 +758,37 @@
       portfolioBtn = document.querySelector('.d2l-action-buttons button, .d2l-action-buttons a');
     }
 
-    const portfolioContainer = portfolioBtn?.closest('div, span, li') ||
-      portfolioBtn?.parentElement;
+    const portfolioContainer = portfolioBtn?.closest('div, span, li') || portfolioBtn?.parentElement;
 
-    // Match banner width to the Add to ePortfolio button so both controls align visually.
     if (portfolioBtn || portfolioContainer) {
       const buttonWidth = portfolioBtn ? Math.round(portfolioBtn.getBoundingClientRect().width) : 0;
       const containerWidth = portfolioContainer ? Math.round(portfolioContainer.getBoundingClientRect().width) : 0;
+
       const primaryText = countedWeight > 0
         ? `${weightedEarned.toFixed(2)} / ${countedWeight.toFixed(0)}`
         : (weightedPct !== null ? weightedPct.toFixed(1) + '%' : 'N/A');
       const secondaryText = weightedPct !== null ? weightedPct.toFixed(1) + '%' : 'N/A';
-      const textWidthEstimate = Math.max(primaryText.length, secondaryText.length) * 9 + 56;
-      const targetWidth = Math.max(buttonWidth, containerWidth, textWidthEstimate);
+
+      // Use a larger per‑character estimate (12px) plus extra padding
+      const textWidthEstimate = Math.max(primaryText.length, secondaryText.length) * 12 + 80;
+      const targetWidth = Math.max(buttonWidth, containerWidth, textWidthEstimate, 180);
+
       if (targetWidth > 0) {
         banner.style.minWidth = `${targetWidth}px`;
         banner.style.width = 'max-content';
         banner.style.maxWidth = 'none';
         banner.style.flex = '0 0 auto';
       }
-    }
 
-    if (portfolioContainer) {
-      // Sit next to the button in flex layout
+      // Prevent wrapping: use nowrap and allow horizontal scroll if needed
       const wrapper = portfolioContainer.parentElement || portfolioContainer;
-      wrapper.style.cssText += 'display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:12px!important;';
+      wrapper.style.cssText += `
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        overflow-x: auto !important;
+      `;
       wrapper.appendChild(banner);
     } else {
       // Fallback: top of main content
@@ -791,31 +797,112 @@
       );
       (main || document.body).insertAdjacentElement('afterbegin', banner);
     }
-
-  }
+}
 
   /* ─────────────────────────────────────────────────────────
-     4. CTRL+K SEARCH SPOTLIGHT — with correct OU links & course fetch
-  ───────────────────────────────────────────────────────── */
+      4. CTRL+K SEARCH SPOTLIGHT — with course nav, default links, and enrollments
+    ───────────────────────────────────────────────────────── */
   let spotlightOpen = false;
   let filteredLinks = [];
   let currentLinks = [];
   let focusIdx = 0;
   let cachedCourses = null;
 
+  // Default quick navigation links (always available)
   function getSpotlightLinks() {
     const ou = getOrgUnitId();
     return [
       { title: 'My Home',            sub: 'Homepage',           href: '/d2l/home',                                                    icon: I.home },
-      { title: 'My Grades',          sub: 'Overall grades',     href: ou ? `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}` : '/d2l/lms/grades/', icon: I.grades },
-      { title: 'Assignments',        sub: 'Dropbox folders',    href: ou ? `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}` : '/d2l/lms/dropbox/', icon: I.upload },
-      { title: 'Discussions',        sub: 'Discussion boards',  href: ou ? `/d2l/le/discussion/${ou}/list` : '/d2l/le/discussion/', icon: I.chat },
-      { title: 'Notifications',      sub: 'Alerts & messages',  href: '/d2l/lp/alerts/notifications',                                 icon: I.bell },
-      { title: 'Calendar',           sub: 'Events & deadlines', href: ou ? `/d2l/le/calendar/${ou}/undefined/unit/Home` : '/d2l/le/calendar/', icon: I.cal },
-      { title: 'Classlist',          sub: 'Class roster',       href: ou ? `/d2l/lms/classlist/classlist.d2l?ou=${ou}` : '/d2l/lms/classlist/', icon: I.users },
-      { title: 'Course Content',     sub: 'Modules & files',    href: ou ? `/d2l/le/content/${ou}/Home` : '/d2l/le/content/', icon: I.book },
-      { title: 'Account Settings',   sub: 'Profile & prefs',    href: '/d2l/lp/account/settings',                                     icon: I.check },
+      // { title: 'My Grades',          sub: 'Overall grades',     href: ou ? `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}` : '/d2l/lms/grades/', icon: I.grades },
+      // { title: 'Assignments',        sub: 'Dropbox folders',    href: ou ? `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}` : '/d2l/lms/dropbox/', icon: I.upload },
+      // { title: 'Discussions',        sub: 'Discussion boards',  href: ou ? `/d2l/le/discussion/${ou}/list` : '/d2l/le/discussion/', icon: I.chat },
+      // { title: 'Notifications',      sub: 'Alerts & messages',  href: '/d2l/lp/alerts/notifications',                                 icon: I.bell },
+      // { title: 'Calendar',           sub: 'Events & deadlines', href: ou ? `/d2l/le/calendar/${ou}/undefined/unit/Home` : '/d2l/le/calendar/', icon: I.cal },
+      // { title: 'Classlist',          sub: 'Class roster',       href: ou ? `/d2l/lms/classlist/classlist.d2l?ou=${ou}` : '/d2l/lms/classlist/', icon: I.users },
+      // { title: 'Course Content',     sub: 'Modules & files',    href: ou ? `/d2l/le/content/${ou}/Home` : '/d2l/le/content/', icon: I.book },
+      // { title: 'Account Settings',   sub: 'Profile & prefs',    href: '/d2l/lp/account/settings',                                     icon: I.check },
     ];
+  }
+
+  // Scrape the current course's navigation bar (Content, Grades, Dropbox, etc.)
+  function getCourseNavLinks() {
+    const ou = getOrgUnitId();
+    if (!ou) return [];
+
+    const links = [];
+    const seenTitles = new Set();
+
+    // Primary: scrape the navbar
+    const selectors = [
+      'nav.d2l-le-navbar a',
+      '.d2l-navigation-s-module-nav a',
+      '[class*="d2l-navbar"] a',
+      '.d2l-le-page-navbar-link',
+      'd2l-navigation-s-link a',
+      '[class*="navigation-s"] a',
+      'nav a',
+    ];
+
+    selectors.forEach(selector => {
+      document.querySelectorAll(selector).forEach(a => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('javascript:')) return;
+
+        const rawText = a.textContent.trim();
+        const title = rawText.replace(/[^\w\s-]/g, '').trim();
+        if (!title || title.length < 2) return;
+        if (seenTitles.has(title.toLowerCase())) return;
+        seenTitles.add(title.toLowerCase());
+
+        // Icon assignment
+        let icon = I.book; // default
+        const lower = title.toLowerCase();
+        if (lower.includes('home')) icon = I.home;
+        else if (lower.includes('content')) icon = I.book;
+        else if (lower.includes('grade')) icon = I.grades;
+        else if (lower.includes('dropbox') || lower.includes('assignment')) icon = I.upload;
+        else if (lower.includes('discussion')) icon = I.chat;
+        else if (lower.includes('quiz') || lower.includes('quizze')) icon = I.quiz;
+        else if (lower.includes('classlist') || lower.includes('roster')) icon = I.users;
+        else if (lower.includes('group')) icon = I.users;
+        else if (lower.includes('survey')) icon = svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>');
+        else if (lower.includes('help')) icon = svg('<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>');
+
+        links.push({
+          title: title,
+          sub: `Current Course`,
+          href: href,
+          icon: icon
+        });
+      });
+    });
+
+    // Fallback: if navbar scraping yielded nothing, construct standard course links
+    if (links.length === 0) {
+      const standardLinks = [
+        { title: 'Course Home',    href: `/d2l/home/${ou}`,                     icon: I.home },
+        { title: 'Content',        href: `/d2l/le/content/${ou}/Home`,          icon: I.book },
+        { title: 'Grades',         href: `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}`, icon: I.grades },
+        { title: 'Dropbox',        href: `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}`, icon: I.upload },
+        { title: 'Discussions',    href: `/d2l/le/discussion/${ou}/list`,       icon: I.chat },
+        { title: 'Quizzes',        href: `/d2l/le/quizzes/${ou}/quizzes_list.d2l`, icon: I.quiz },
+        { title: 'Classlist',      href: `/d2l/lms/classlist/classlist.d2l?ou=${ou}`, icon: I.users },
+        { title: 'Groups',         href: `/d2l/le/groups/${ou}/home`,           icon: I.users },
+        { title: 'Surveys',        href: `/d2l/le/surveys/${ou}/surveys_list.d2l`, icon: svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>') },
+      ];
+
+      standardLinks.forEach(link => {
+        if (!seenTitles.has(link.title.toLowerCase())) {
+          seenTitles.add(link.title.toLowerCase());
+          links.push({
+            ...link,
+            sub: 'Current Course'
+          });
+        }
+      });
+    }
+
+    return links;
   }
 
   async function fetchUserCourses() {
@@ -870,24 +957,17 @@
   }
 
   function normalizeSearch(query) {
-    // Normalize: lowercase, remove special chars, collapse spaces
     return query.toLowerCase().replace(/[^a-z0-9* ]/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
   function fuzzyMatch(query, title, sub) {
     const q = normalizeSearch(query);
-    if (!q) return true; // empty query matches everything
-
+    if (!q) return true;
     const t = (title + ' ' + sub).toLowerCase();
-
-    // Direct substring match
     if (t.includes(q)) return true;
-
-    // Split query into keywords and check all must be present
     const keywords = q.split(' ').filter(k => k.length > 0);
     if (keywords.length > 1) {
       return keywords.every(kw => {
-        // Support * as wildcard - just check if the part before * matches
         if (kw.includes('*')) {
           const parts = kw.split('*').filter(p => p.length > 0);
           return parts.every(part => t.includes(part));
@@ -895,8 +975,6 @@
         return t.includes(kw);
       });
     }
-
-    // Single keyword: check if each word in query appears in title/sub
     const queryWords = q.split(' ').filter(w => w.length > 0);
     return queryWords.every(w => t.includes(w));
   }
@@ -936,16 +1014,24 @@
     ov.classList.add('cl-visible');
     const inp = document.getElementById('cl-spotlight-input');
     if (inp) { inp.value = ''; inp.focus(); }
-    
-    currentLinks = getSpotlightLinks();
-    renderSpotlightResults('', currentLinks);
-    
-    // Fetch user courses dynamically and append to search
+
+    // 1. Course navigation links (if inside a course) - refresh each time
+    const courseNavLinks = getCourseNavLinks();
+
+    // 2. Default quick links
+    const defaultLinks = getSpotlightLinks();
+
+    // 3. User enrollments (fetched async)
     const courses = await fetchUserCourses();
-    if (courses.length > 0 && spotlightOpen) {
-      currentLinks = [...getSpotlightLinks(), ...courses];
-      renderSpotlightResults(inp?.value || '', currentLinks, false);
-    }
+
+    // Filter out courses that are already in courseNavLinks or defaultLinks
+    const navHrefs = new Set([...courseNavLinks, ...defaultLinks].map(l => l.href.toLowerCase()));
+    const filteredCourses = courses.filter(c => !navHrefs.has(c.href.toLowerCase()));
+
+    // Combine: course nav first, then default, then other courses
+    currentLinks = [...courseNavLinks, ...defaultLinks, ...filteredCourses];
+
+    renderSpotlightResults('', currentLinks);
   }
 
   function closeSpotlight() {
@@ -953,7 +1039,7 @@
     document.getElementById('cl-spotlight-overlay')?.classList.remove('cl-visible');
   }
 
-  // Use capture phase (true) so we intercept before D2L's bubble-phase handlers
+  // Use capture phase (true) to intercept before D2L's bubble‑phase handlers
   document.addEventListener('keydown', e => {
     if (settings.searchHotkey && (e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();
@@ -961,7 +1047,7 @@
       spotlightOpen ? closeSpotlight() : openSpotlight();
     }
     if (e.key === 'Escape' && spotlightOpen) closeSpotlight();
-  }, true); // capture phase
+  }, true);
 
   /* ─────────────────────────────────────────────────────────
      5. ASSIGNMENT ROW STYLING

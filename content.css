@@ -574,3 +574,16 @@ h1.d2l-heading-1, h2.d2l-heading-2, h3.d2l-heading-3,
 .cl-main-content {
   font-family: var(--cl-font) !important;
 }
+
+/* Force single‑line display for the grade banner */
+#cl-grade-banner,
+.cl-grade-banner-inner,
+.cl-grade-banner-stats {
+  white-space: nowrap !important;
+}
+
+/* Allow the parent flex container to scroll horizontally if needed */
+.d2l-page-main-content,
+[class*="d2l-main"] {
+  overflow-x: auto;
+}
