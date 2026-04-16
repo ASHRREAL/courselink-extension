@@ -169,6 +169,157 @@ html[data-cl-dark] d2l-course-selector {
   border-color: #2e3340 !important;
 }
 
+/* ═══════════════════════════════════════════════════
+   MODULE CONTENT & DATALIST — Dark mode for module frames
+   ═══════════════════════════════════════════════════ */
+/* Module frame containers */
+html[data-cl-dark] d2l-module-frame,
+html[data-cl-dark] [class*="d2l-module"],
+html[data-cl-dark] [class*="d2l-collapsepane"],
+html[data-cl-dark] .d2l-collapsepane-content {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+}
+/* Datalist containers (lists of resources/assignments/discussions) */
+html[data-cl-dark] .d2l-datalist-container,
+html[data-cl-dark] [class*="d2l-datalist"] {
+  background-color: transparent !important;
+}
+/* Datalist items and their backgrounds */
+html[data-cl-dark] .d2l-datalist-item,
+html[data-cl-dark] .d2l-datalist-item-content,
+html[data-cl-dark] li.d2l-datalist-item,
+html[data-cl-dark] li.d2l-datalist-simpleitem {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+/* Datalist summary and header text */
+html[data-cl-dark] .d2l-datalist-summary,
+html[data-cl-dark] [class*="d2l-datalist-summary"] {
+  color: #e8eaf0 !important;
+}
+/* Links within datalist items */
+html[data-cl-dark] .d2l-datalist-item a,
+html[data-cl-dark] .d2l-datalist-item-content a,
+html[data-cl-dark] li.d2l-datalist-item a {
+  color: #60a5fa !important;
+}
+html[data-cl-dark] .d2l-datalist-item a:hover,
+html[data-cl-dark] .d2l-datalist-item-content a:hover,
+html[data-cl-dark] li.d2l-datalist-item a:hover {
+  color: #93c5fd !important;
+}
+/* Textblocks and labels in datalist items */
+html[data-cl-dark] .d2l-datalist-item .d2l-textblock,
+html[data-cl-dark] .d2l-datalist-item-content .d2l-textblock,
+html[data-cl-dark] .d2l-datalist-item [class*="d2l-body"],
+html[data-cl-dark] li.d2l-datalist-item [class*="d2l-label"] {
+  color: #e8eaf0 !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   PROGRESS PAGE — Dark mode for progress/learning views
+   ═══════════════════════════════════════════════════ */
+/* Progress page main containers */
+html[data-cl-dark] [class*="d2l-progress"],
+html[data-cl-dark] [class*="learning-outcome"],
+html[data-cl-dark] [class*="d2l-learning-view"] {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+}
+/* Progress panel backgrounds */
+html[data-cl-dark] [class*="progress-panel"],
+html[data-cl-dark] [class*="progress-item"],
+html[data-cl-dark] [class*="progress-card"],
+html[data-cl-dark] [class*="progress-section"] {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+/* Progress text and labels */
+html[data-cl-dark] [class*="progress-panel"] *,
+html[data-cl-dark] [class*="progress-item"] *,
+html[data-cl-dark] [class*="progress-card"] * {
+  color: #e8eaf0 !important;
+}
+/* Progress bars */
+html[data-cl-dark] [class*="progress-bar"],
+html[data-cl-dark] .d2l-progress-bar,
+html[data-cl-dark] [role*="progressbar"] {
+  background-color: #1a1d23 !important;
+  border-color: #2e3340 !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   LEAF & RESOURCE ITEMS — Dark mode for content trees
+   ═══════════════════════════════════════════════════ */
+/* Leaf items in content trees */
+html[data-cl-dark] d2l-leaf,
+html[data-cl-dark] [class*="d2l-leaf"],
+html[data-cl-dark] [class*="leaf-item"],
+html[data-cl-dark] [class*="d2l-le-tree-item"] {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+/* Content/resource/assignment/discussion list items */
+html[data-cl-dark] [class*="d2l-item-list"] li,
+html[data-cl-dark] [class*="d2l-sortable-list"] li,
+html[data-cl-dark] [class*="d2l-content-item"],
+html[data-cl-dark] [class*="d2l-resource-item"],
+html[data-cl-dark] [class*="d2l-assignment-list"] li,
+html[data-cl-dark] [class*="d2l-discussion-list"] li {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+}
+/* Item hover state */
+html[data-cl-dark] [class*="d2l-leaf"]:hover,
+html[data-cl-dark] [class*="leaf-item"]:hover,
+html[data-cl-dark] [class*="d2l-item-list"] li:hover,
+html[data-cl-dark] [class*="d2l-content-item"]:hover {
+  background-color: rgba(46, 51, 64, 0.75) !important;
+}
+/* Meta/description text in items */
+html[data-cl-dark] [class*="d2l-item"] [class*="d2l-small"],
+html[data-cl-dark] [class*="d2l-item"] [class*="meta"],
+html[data-cl-dark] [class*="d2l-body-small"] {
+  color: #cbd5e1 !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   CONTENT CONTAINERS & DETAILS — Dark mode for inner content
+   ═══════════════════════════════════════════════════ */
+/* Content pane wrapping divs */
+html[data-cl-dark] [class*="content-pane"],
+html[data-cl-dark] [class*="d2l-content-pane"],
+html[data-cl-dark] [class*="d2l-le-content"],
+html[data-cl-dark] .d2l-le-page-main-content {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+}
+/* Details/summary elements (collapsible sections) */
+html[data-cl-dark] details,
+html[data-cl-dark] details > summary {
+  background-color: #252830 !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+html[data-cl-dark] details > summary:hover {
+  background-color: #2e3340 !important;
+}
+/* Links in dark mode content */
+html[data-cl-dark] a.d2l-link,
+html[data-cl-dark] .d2l-link,
+html[data-cl-dark] [class*="d2l-main"] a:not([class*="d2l-button"]) {
+  color: #60a5fa !important;
+}
+html[data-cl-dark] a.d2l-link:hover,
+html[data-cl-dark] .d2l-link:hover,
+html[data-cl-dark] [class*="d2l-main"] a:not([class*="d2l-button"]):hover {
+  color: #93c5fd !important;
+}
+
 /* ── Font upgrade (non-intrusive) ── */
 body, .d2l-body, .d2l-typography, td, th, p, span, div, a, button {
   font-family: var(--cl-font) !important;
@@ -572,122 +723,4 @@ h1.d2l-heading-1, h2.d2l-heading-2, h3.d2l-heading-3,
 .d2l-page-main-content,
 [class*="d2l-main"] {
   overflow-x: auto;
-}
-
-/* ═══════════════════════════════════════════════════
-   MODULE & PROGRESS PAGE DARK MODE
-   Comprehensive coverage for all D2L module/leaf/frame
-   and progress page components
-   ═══════════════════════════════════════════════════ */
-
-/* Module frames and containers */
-html[data-cl-dark] d2l-module-frame,
-html[data-cl-dark] [class*="d2l-module-frame"],
-html[data-cl-dark] d2l-leaf,
-html[data-cl-dark] [class*="d2l-leaf"],
-html[data-cl-dark] d2l-leaf-item,
-html[data-cl-dark] [class*="leaf-item"],
-html[data-cl-dark] d2l-module-item,
-html[data-cl-dark] [class*="module-item"],
-html[data-cl-dark] [class*="module-panel"],
-html[data-cl-dark] [class*="d2l-module"] {
-  background-color: #1e2128 !important;
-  color: #e8eaf0 !important;
-}
-
-/* Module/leaf nested content */
-html[data-cl-dark] d2l-module-frame *,
-html[data-cl-dark] d2l-leaf *,
-html[data-cl-dark] d2l-leaf-item *,
-html[data-cl-dark] d2l-module-item *,
-html[data-cl-dark] [class*="d2l-module"] * {
-  background-color: inherit;
-  color: #e8eaf0 !important;
-}
-
-/* Progress page panels */
-html[data-cl-dark] .d2l-progress,
-html[data-cl-dark] [class*="progress-panel"],
-html[data-cl-dark] [class*="d2l-progress"],
-html[data-cl-dark] [class*="achievement"],
-html[data-cl-dark] [class*="d2l-achievement"],
-html[data-cl-dark] [class*="outcome"],
-html[data-cl-dark] [class*="d2l-outcome"] {
-  background-color: #1e2128 !important;
-  color: #e8eaf0 !important;
-}
-
-/* Content cards within resources/discussions */
-html[data-cl-dark] [class*="d2l-frame"],
-html[data-cl-dark] .d2l-frame,
-html[data-cl-dark] [class*="d2l-card"],
-html[data-cl-dark] .d2l-card,
-html[data-cl-dark] [class*="d2l-content-container"],
-html[data-cl-dark] [class*="content-container"] {
-  background-color: #1e2128 !important;
-  color: #e8eaf0 !important;
-  border-color: #2e3340 !important;
-}
-
-/* Resource/discussion/assignment list items */
-html[data-cl-dark] [class*="d2l-leaf-content"],
-html[data-cl-dark] [class*="leaf-content"],
-html[data-cl-dark] .d2l-leaf-content,
-html[data-cl-dark] [class*="resource-item"],
-html[data-cl-dark] [class*="discussion-item"],
-html[data-cl-dark] [class*="assignment-item"],
-html[data-cl-dark] [class*="topic-item"],
-html[data-cl-dark] [class*="module-item-content"],
-html[data-cl-dark] [class*="item-content"] {
-  background-color: #1e2128 !important;
-  color: #e8eaf0 !important;
-}
-
-/* D2L page wrapper and main containers */
-html[data-cl-dark] .d2l-page,
-html[data-cl-dark] .d2l-page-wrapper,
-html[data-cl-dark] .d2l-app,
-html[data-cl-dark] [class*="d2l-content"] {
-  background-color: #161920 !important;
-  color: #e8eaf0 !important;
-}
-
-/* Expand/collapse toggles and UI elements */
-html[data-cl-dark] [class*="d2l-button"],
-html[data-cl-dark] button {
-  background-color: #252830 !important;
-  color: #e8eaf0 !important;
-  border-color: #2e3340 !important;
-}
-
-html[data-cl-dark] [class*="d2l-button"]:hover,
-html[data-cl-dark] button:hover {
-  background-color: #2e3340 !important;
-  border-color: #3a4050 !important;
-}
-
-/* Detail/summary elements */
-html[data-cl-dark] details,
-html[data-cl-dark] summary,
-html[data-cl-dark] [class*="d2l-details"],
-html[data-cl-dark] [class*="details"] {
-  background-color: #1e2128 !important;
-  color: #e8eaf0 !important;
-}
-
-/* Meta information and secondary text */
-html[data-cl-dark] [class*="d2l-meta"],
-html[data-cl-dark] [class*="meta-info"],
-html[data-cl-dark] [class*="meta-text"],
-html[data-cl-dark] [class*="secondary"] {
-  color: #9ca3af !important;
-}
-
-/* Links inside dark themed areas */
-html[data-cl-dark] a {
-  color: #60a5fa !important;
-}
-
-html[data-cl-dark] a:hover {
-  color: #93c5fd !important;
 }
