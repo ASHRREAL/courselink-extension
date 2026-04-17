@@ -10,42 +10,42 @@
 
 /* ── Variables ── */
 :root {
-  --cl-primary:       #c8102e;
+  --cl-primary: #c8102e;
   --cl-primary-light: #e8304a;
-  --cl-accent:        #ffd200;
-  --cl-surface:       #ffffff;
-  --cl-surface-2:     #f0f2f7;
-  --cl-border:        #e0e4ec;
-  --cl-text:          #1a1d23;
-  --cl-text-muted:    #6b7280;
-  --cl-success:       #16a34a;
-  --cl-warning:       #d97706;
-  --cl-danger:        #dc2626;
-  --cl-info:          #2563eb;
-  --cl-radius:        10px;
-  --cl-radius-sm:     6px;
-  --cl-shadow:        0 2px 12px rgba(0,0,0,0.08);
-  --cl-shadow-lg:     0 8px 32px rgba(0,0,0,0.14);
-  --cl-transition:    0.18s ease;
-  --cl-font:          'Inter', 'Lato', system-ui, sans-serif;
+  --cl-accent: #ffd200;
+  --cl-surface: #ffffff;
+  --cl-surface-2: #f0f2f7;
+  --cl-border: #e0e4ec;
+  --cl-text: #1a1d23;
+  --cl-text-muted: #6b7280;
+  --cl-success: #16a34a;
+  --cl-warning: #d97706;
+  --cl-danger: #dc2626;
+  --cl-info: #2563eb;
+  --cl-radius: 10px;
+  --cl-radius-sm: 6px;
+  --cl-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --cl-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+  --cl-transition: 0.18s ease;
+  --cl-font: 'Inter', 'Lato', system-ui, sans-serif;
 }
 
 /* Dark mode variables (triggered by data-cl-dark on html) */
 html[data-cl-dark] {
-  --cl-surface:    #1a1d23;
-  --cl-surface-2:  #242830;
-  --cl-border:     #2e3340;
-  --cl-text:       #e8eaf0;
+  --cl-surface: #1a1d23;
+  --cl-surface-2: #242830;
+  --cl-border: #2e3340;
+  --cl-text: #e8eaf0;
   --cl-text-muted: #9ca3af;
-  --cl-shadow:     0 2px 12px rgba(0,0,0,0.4);
-  --cl-shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
+  --cl-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --cl-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
 /* Extra dark-mode overrides for D2L elements that use hardcoded white backgrounds */
 /* Course card backgrounds (lower portion / text area) */
 html[data-cl-dark] [class*="d2l-my-courses-course-tile-footer"],
 html[data-cl-dark] [class*="d2l-my-courses-course-tile-info"],
-html[data-cl-dark] [class*="d2l-my-courses-course-tile"] > div:not([class*="image"]):not([class*="img"]),
+html[data-cl-dark] [class*="d2l-my-courses-course-tile"]>div:not([class*="image"]):not([class*="img"]),
 html[data-cl-dark] [class*="d2l-course-tile-footer"],
 html[data-cl-dark] [class*="course-image-tile-name"],
 html[data-cl-dark] d2l-enrollment-tile,
@@ -65,6 +65,7 @@ html[data-cl-dark] [class*="enrollment-tile"] {
   background-color: #1e2128 !important;
   color: #e8eaf0 !important;
 }
+
 /* Course card text — force readable inside tiles */
 html[data-cl-dark] d2l-course-tile-text *,
 html[data-cl-dark] d2l-course-tile-title *,
@@ -73,9 +74,10 @@ html[data-cl-dark] [class*="course-tile-text"] *,
 html[data-cl-dark] [class*="tile-text"] * {
   color: #e8eaf0 !important;
 }
+
 /* Widget card inner items (e.g. "4 Dropbox Folders with Unread Feedback" white box) */
 html[data-cl-dark] [class*="d2l-update-notifications"] li,
-html[data-cl-dark] [class*="d2l-notification"] > *,
+html[data-cl-dark] [class*="d2l-notification"]>*,
 html[data-cl-dark] [class*="d2l-widget"] li,
 html[data-cl-dark] [class*="d2l-widget-presentation"],
 html[data-cl-dark] [class*="d2l-activity-list"] li {
@@ -83,39 +85,63 @@ html[data-cl-dark] [class*="d2l-activity-list"] li {
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
 }
-/* Grade display text — ensure score text is readable regardless of component background */
-html[data-cl-dark] [class*="d2l-grade-result"],
-html[data-cl-dark] [class*="d2l-score"],
-html[data-cl-dark] [class*="d2l-grade"],
-html[data-cl-dark] .d2l-grade-result-value,
-html[data-cl-dark] [class*="grade-result"],
-html[data-cl-dark] [class*="d2l-percentage"] {
-  color: #e8eaf0 !important;
-}
-/* Fix colored grade percentage badges/text — force readable in dark mode */
-html[data-cl-dark] [class*="d2l-grade-result"] span,
-html[data-cl-dark] [class*="d2l-grade-result"] *,
-html[data-cl-dark] [class*="d2l-score"] span,
-html[data-cl-dark] [class*="d2l-grade"] span,
-html[data-cl-dark] [class*="grade-result"] span,
-html[data-cl-dark] [class*="percentage"] span,
-html[data-cl-dark] [class*="percentage"] {
-  color: #e8eaf0 !important;
-}
-/* Fix inline-styled grade percentage text (D2L hardcodes colors like red for low grades) */
+
+/* Note: Semantic D2L classes like .d2l-textblock-poor (red) and .d2l-textblock-good (green) or inline color overrides dictate grade colors.
+   We REMOVED the blanket override that forced all grades to #e8eaf0 so default colors shine through. */
+
+/* Fix inline-styled grade percentage text (D2L hardcodes dark reds/greens for grades which are invisible on dark mode, map them to readable pastels) */
+
+/* Map Red / Low Grades -> Pastel Red */
 html[data-cl-dark] [style*="color: rgb(220"],
-html[data-cl-dark] [style*="color: #dc"],
 html[data-cl-dark] [style*="color: rgb(255"],
-html[data-cl-dark] [style*="color:#ff"],
-html[data-cl-dark] [style*="color:#DC"],
-html[data-cl-dark] [style*="color: #FF"],
-html[data-cl-dark] [style*="color:red"],
-html[data-cl-dark] [style*="color: red"],
+html[data-cl-dark] [style*="color: #dc"],
+html[data-cl-dark] [style*="color: #DC"],
 html[data-cl-dark] [style*="color:#dc"],
 html[data-cl-dark] [style*="color:#DC"],
+html[data-cl-dark] [style*="color:red"],
+html[data-cl-dark] [style*="color: red"],
 html[data-cl-dark] [style*="color:#ff"],
-html[data-cl-dark] [style*="color:#FF"] {
+html[data-cl-dark] [style*="color: #ff"],
+html[data-cl-dark] [style*="color:#FF"],
+html[data-cl-dark] [style*="color: #FF"] {
+  color: #ff6b6b !important;
+}
+
+/* Map Green / High Grades -> Pastel Green */
+html[data-cl-dark] [style*="color: rgb(0, 128"],
+html[data-cl-dark] [style*="color: green" i],
+html[data-cl-dark] [style*="color:green" i],
+html[data-cl-dark] [style*="color: #008"],
+html[data-cl-dark] [style*="color:#008"] {
+  color: #4cd964 !important;
+}
+
+/* Map Black / Neutral text fallbacks to white */
+html[data-cl-dark] [style*="color: black" i],
+html[data-cl-dark] [style*="color:black" i],
+html[data-cl-dark] [style*="color: #000" i],
+html[data-cl-dark] [style*="color:#000" i],
+html[data-cl-dark] [style*="color: #333" i],
+html[data-cl-dark] [style*="color:#333" i] {
   color: #e8eaf0 !important;
+}
+
+/* D2L semantic text coloring -> Dark Mode Pastels */
+html[data-cl-dark] .d2l-textblock-good,
+html[data-cl-dark] .d2l-textblock-strong,
+html[data-cl-dark] .vui-text-good {
+  color: #4cd964 !important;
+}
+html[data-cl-dark] .d2l-textblock-poor,
+html[data-cl-dark] .d2l-textblock-bad,
+html[data-cl-dark] .vui-text-bad,
+html[data-cl-dark] .vui-text-poor,
+html[data-cl-dark] .d2l-color-feedback-error {
+  color: #ff6b6b !important;
+}
+html[data-cl-dark] .d2l-textblock-warning,
+html[data-cl-dark] .vui-text-warning {
+  color: #ffcc00 !important;
 }
 
 /* Low-grade percentage badges use hardcoded warm backgrounds like #FFF1EA */
@@ -139,34 +165,164 @@ html[data-cl-dark] [style*="background-color: rgb(255, 241, 234)"] span,
 html[data-cl-dark] [style*="background-color: rgb(255,241,234)"] span {
   color: #e8eaf0 !important;
 }
+
 /* Tables: force white bg rows to dark */
-html[data-cl-dark] tr > td,
+html[data-cl-dark] tr>td,
 html[data-cl-dark] tbody tr {
   background-color: #1e2128 !important;
   color: #e8eaf0 !important;
 }
-html[data-cl-dark] tbody tr:hover > td {
+
+html[data-cl-dark] tbody tr:hover>td {
   background-color: #252830 !important;
 }
+
+/* Quiz info table (Current User / Time Limit / Attempts): keep text-only, no panel fill */
+html[data-cl-dark] table.d_FG,
+html[data-cl-dark] table.d_FG tbody,
+html[data-cl-dark] table.d_FG tr,
+html[data-cl-dark] table.d_FG td,
+html[data-cl-dark] table.d_FG th,
+html[data-cl-dark] table.d_FG .fl_n,
+html[data-cl-dark] table.d_FG .fct_w {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-cl-dark] table.d_FG tr:hover,
+html[data-cl-dark] table.d_FG tr:hover>td,
+html[data-cl-dark] table.d_FG td:hover,
+html[data-cl-dark] table.d_FG th:hover,
+html[data-cl-dark] table.d_FG .fl_n:hover,
+html[data-cl-dark] table.d_FG .fct_w:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html[data-cl-dark] table.d_FG label,
+html[data-cl-dark] table.d_FG span {
+  color: #e8eaf0 !important;
+}
+
 /* Notification/alert panels */
 html[data-cl-dark] [class*="notification-panel"],
 html[data-cl-dark] [class*="notification-item"],
 html[data-cl-dark] [class*="alert-toast"],
 html[data-cl-dark] d2l-notification,
-html[data-cl-dark] d2l-alert-toast {
+html[data-cl-dark] d2l-alert-toast,
+html[data-cl-dark] .d2l-msg-container,
+html[data-cl-dark] .tox-pop,
+html[data-cl-dark] .tox-dialog {
   background-color: #1e2128 !important;
   color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
 }
-/* Dropdown menus and course selector */
+
+/* Dropdown menus, popups, profile cards and course selectors */
 html[data-cl-dark] [class*="d2l-dropdown"],
 html[data-cl-dark] [class*="dropdown-content"],
 html[data-cl-dark] [class*="d2l-menu"],
 html[data-cl-dark] d2l-dropdown-content,
 html[data-cl-dark] d2l-dropdown-menu,
-html[data-cl-dark] d2l-course-selector {
+html[data-cl-dark] d2l-menu,
+html[data-cl-dark] .d2l-menu-item,
+html[data-cl-dark] d2l-menu-item,
+html[data-cl-dark] d2l-dialog,
+html[data-cl-dark] d2l-course-selector,
+html[data-cl-dark] .d2l-minipanel,
+html[data-cl-dark] [class*="d2l-tooltip"],
+html[data-cl-dark] .d2l-user-profile-card {
   background-color: #1e2128 !important;
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] .d2l-user-profile-card *,
+html[data-cl-dark] .d2l-minipanel *,
+html[data-cl-dark] .d2l-tooltip-content * {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] .d2l-user-profile-card .d2l-button {
+  background-color: #2e3340 !important;
+}
+html[data-cl-dark] .d2l-user-profile-card-corner img {
+  display: none !important;
+}
+
+/* Floating action/button rails that appear on scroll */
+html[data-cl-dark] .d2l-floating-buttons-inner-container,
+html[data-cl-dark] .d2l-floating-buttons-container,
+html[data-cl-dark] d2l-floating-buttons {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-cl-dark] .d2l-floating-buttons-inner-container button,
+html[data-cl-dark] .d2l-floating-buttons-inner-container a,
+html[data-cl-dark] .d2l-floating-buttons-inner-container [class*="d2l-button"],
+html[data-cl-dark] .d2l-floating-buttons-container button,
+html[data-cl-dark] .d2l-floating-buttons-container a,
+html[data-cl-dark] .d2l-floating-buttons-container [class*="d2l-button"] {
+  background-color: rgba(15, 23, 42, 0.22) !important;
+  color: #e8eaf0 !important;
+  border: 1px solid rgba(148, 163, 184, 0.55) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+html[data-cl-dark] .d2l-floating-buttons-inner-container button:hover,
+html[data-cl-dark] .d2l-floating-buttons-inner-container a:hover,
+html[data-cl-dark] .d2l-floating-buttons-inner-container [class*="d2l-button"]:hover,
+html[data-cl-dark] .d2l-floating-buttons-container button:hover,
+html[data-cl-dark] .d2l-floating-buttons-container a:hover,
+html[data-cl-dark] .d2l-floating-buttons-container [class*="d2l-button"]:hover {
+  background-color: rgba(30, 41, 59, 0.28) !important;
+  border-color: rgba(191, 219, 254, 0.8) !important;
+}
+
+/* Brightspace inline light backgrounds (e.g., style="background-color:#FFF;") */
+html[data-cl-dark] [style*="background-color:#FFF"],
+html[data-cl-dark] [style*="background-color: #FFF"],
+html[data-cl-dark] [style*="background-color:#fff"],
+html[data-cl-dark] [style*="background-color: #fff"],
+html[data-cl-dark] [style*="background-color: #FFFFFF"],
+html[data-cl-dark] [style*="background-color:#FFFFFF"] {
+  background-color: #1e2128 !important;
+  color: #e8eaf0 !important;
+}
+
+/* Discussions page: thread cards + topic list/sidebar */
+html[data-cl-dark] .d2l-le-disc-post,
+html[data-cl-dark] .d2l-le-disc-post-border,
+html[data-cl-dark] .d2l_le_discussions_threadlistitem_subject,
+html[data-cl-dark] [class*="d2l-le-disc"],
+html[data-cl-dark] [class*="threadlist"],
+html[data-cl-dark] [class*="thread-list"],
+html[data-cl-dark] [id*="threadListItemContents"] {
+  background-color: #1e2128 !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] .d2l-le-disc-post * {
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] .d2l-le-disc-post a,
+html[data-cl-dark] .d2l_le_discussions_threadlistitem_subject a {
+  color: #60a5fa !important;
+}
+
+html[data-cl-dark] .d2l-le-disc-post a:hover,
+html[data-cl-dark] .d2l_le_discussions_threadlistitem_subject a:hover {
+  color: #93c5fd !important;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -180,11 +336,13 @@ html[data-cl-dark] .d2l-collapsepane-content {
   background-color: transparent !important;
   color: #e8eaf0 !important;
 }
+
 /* Datalist containers (lists of resources/assignments/discussions) */
 html[data-cl-dark] .d2l-datalist-container,
 html[data-cl-dark] [class*="d2l-datalist"] {
   background-color: transparent !important;
 }
+
 /* Datalist items and their backgrounds */
 html[data-cl-dark] .d2l-datalist-item,
 html[data-cl-dark] .d2l-datalist-item-content,
@@ -194,28 +352,142 @@ html[data-cl-dark] li.d2l-datalist-simpleitem {
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
 }
+
 /* Datalist summary and header text */
 html[data-cl-dark] .d2l-datalist-summary,
 html[data-cl-dark] [class*="d2l-datalist-summary"] {
   color: #e8eaf0 !important;
 }
+
 /* Links within datalist items */
 html[data-cl-dark] .d2l-datalist-item a,
 html[data-cl-dark] .d2l-datalist-item-content a,
 html[data-cl-dark] li.d2l-datalist-item a {
   color: #60a5fa !important;
 }
+
 html[data-cl-dark] .d2l-datalist-item a:hover,
 html[data-cl-dark] .d2l-datalist-item-content a:hover,
 html[data-cl-dark] li.d2l-datalist-item a:hover {
   color: #93c5fd !important;
 }
+
 /* Textblocks and labels in datalist items */
 html[data-cl-dark] .d2l-datalist-item .d2l-textblock,
 html[data-cl-dark] .d2l-datalist-item-content .d2l-textblock,
 html[data-cl-dark] .d2l-datalist-item [class*="d2l-body"],
 html[data-cl-dark] li.d2l-datalist-item [class*="d2l-label"] {
   color: #e8eaf0 !important;
+}
+
+/* Specific fix: discussion left accordion (Assignment #1/#2...) */
+html[data-cl-dark] .d2l-accordion-content,
+html[data-cl-dark] .d2l-accordion-content-expanded,
+html[data-cl-dark] .d2l-accordion-content .d2l-containerlink,
+html[data-cl-dark] .d2l-accordion-content [id^="TreeItem"],
+html[data-cl-dark] .d2l-accordion-content .d2l-sep,
+html[data-cl-dark] .d2l-accordion-content .d2l-sep hr {
+  background-color: #1e2128 !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] .d2l-accordion-content .d2l-containerlink:hover,
+html[data-cl-dark] .d2l-accordion-content .d2l-containerlink:focus {
+  background-color: #252830 !important;
+}
+
+html[data-cl-dark] .d2l-accordion-content .d2l-textblock,
+html[data-cl-dark] .d2l-accordion-content .d2l-textblock-strong,
+html[data-cl-dark] .d2l-accordion-content [id^="UnreadTreeItem"] {
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] #UnreadTreeItem5894302,
+html[data-cl-dark] [id^="UnreadTreeItem"],
+html[data-cl-dark] [id*="UnreadTreeItem"] {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+/* Force all assignment-row count numbers to black (right-side badges) */
+html[data-cl-dark] .d2l-accordion-content [id^="TreeItem"]>div:not(.d2l-clear):last-of-type .d2l-textblock,
+html[data-cl-dark] .d2l-accordion-content [id^="TreeItem"]>div:not(.d2l-clear):last-of-type .d2l-textblock-strong {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+/* Legacy updates widget blocks */
+html[data-cl-dark] .dl_p,
+html[data-cl-dark] .ds_i,
+html[data-cl-dark] .ds_i strong {
+  background-color: transparent !important;
+  color: #e8eaf0 !important;
+}
+
+/* Specific fix: content page right navigator collapse pane */
+html[data-cl-dark] .d2l-page-collapsepane-content,
+html[data-cl-dark] .d2l-page-collapsepane-content-inner,
+html[data-cl-dark] .d2l-page-collapsepane-content-padding,
+html[data-cl-dark] #ContentNavigator,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-container,
+html[data-cl-dark] #ContentNavigator .d2l-datalist,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item-content,
+html[data-cl-dark] #ContentNavigator li.d2l-datalist-item {
+  background-color: #1e2128 !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item.vui-selected,
+html[data-cl-dark] #ContentNavigator li.d2l-datalist-item.vui-selected,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item:hover,
+html[data-cl-dark] #ContentNavigator li.d2l-datalist-item:hover {
+  background-color: #252830 !important;
+}
+
+html[data-cl-dark] #ContentNavigator .d2l-link,
+html[data-cl-dark] #ContentNavigator .d2l-body-small,
+html[data-cl-dark] #ContentNavigator .d2l-textblock,
+html[data-cl-dark] #ContentNavigator .d2l-heading,
+html[data-cl-dark] #ContentNavigator [class*="d2l-body"] {
+  color: #e8eaf0 !important;
+}
+
+/* Progress page selected nav rows (e.g., Summary) */
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item-content-first,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item-content-first[title*="Currently Selected"],
+html[data-cl-dark] .d2l-datalist-item-content-first,
+html[data-cl-dark] .d2l-datalist-item-content-first[title*="Currently Selected"] {
+  background-color: #252830 !important;
+  color: #f8fafc !important;
+  border-color: #2e3340 !important;
+}
+
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item-content-first .d2l-textblock,
+html[data-cl-dark] #ContentNavigator .d2l-datalist-item-content-first .d2l-textblock-strong,
+html[data-cl-dark] .d2l-datalist-item-content-first .d2l-textblock,
+html[data-cl-dark] .d2l-datalist-item-content-first .d2l-textblock-strong {
+  color: #f8fafc !important;
+}
+
+/* Unread count badge contrast fix */
+html[data-cl-dark] #UnreadTreeItem5894302,
+html[data-cl-dark] [id^="UnreadTreeItem"],
+html[data-cl-dark] [id*="UnreadTreeItem"] {
+  color: #111827 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  font-weight: 700 !important;
+  display: inline !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-text-fill-color: #111827 !important;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -228,6 +500,7 @@ html[data-cl-dark] [class*="d2l-learning-view"] {
   background-color: transparent !important;
   color: #e8eaf0 !important;
 }
+
 /* Progress panel backgrounds */
 html[data-cl-dark] [class*="progress-panel"],
 html[data-cl-dark] [class*="progress-item"],
@@ -237,12 +510,14 @@ html[data-cl-dark] [class*="progress-section"] {
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
 }
+
 /* Progress text and labels */
 html[data-cl-dark] [class*="progress-panel"] *,
 html[data-cl-dark] [class*="progress-item"] *,
 html[data-cl-dark] [class*="progress-card"] * {
   color: #e8eaf0 !important;
 }
+
 /* Progress bars */
 html[data-cl-dark] [class*="progress-bar"],
 html[data-cl-dark] .d2l-progress-bar,
@@ -263,6 +538,7 @@ html[data-cl-dark] [class*="d2l-le-tree-item"] {
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
 }
+
 /* Content/resource/assignment/discussion list items */
 html[data-cl-dark] [class*="d2l-item-list"] li,
 html[data-cl-dark] [class*="d2l-sortable-list"] li,
@@ -273,6 +549,7 @@ html[data-cl-dark] [class*="d2l-discussion-list"] li {
   background-color: transparent !important;
   color: #e8eaf0 !important;
 }
+
 /* Item hover state */
 html[data-cl-dark] [class*="d2l-leaf"]:hover,
 html[data-cl-dark] [class*="leaf-item"]:hover,
@@ -280,6 +557,7 @@ html[data-cl-dark] [class*="d2l-item-list"] li:hover,
 html[data-cl-dark] [class*="d2l-content-item"]:hover {
   background-color: rgba(46, 51, 64, 0.75) !important;
 }
+
 /* Meta/description text in items */
 html[data-cl-dark] [class*="d2l-item"] [class*="d2l-small"],
 html[data-cl-dark] [class*="d2l-item"] [class*="meta"],
@@ -298,22 +576,26 @@ html[data-cl-dark] .d2l-le-page-main-content {
   background-color: transparent !important;
   color: #e8eaf0 !important;
 }
+
 /* Details/summary elements (collapsible sections) */
 html[data-cl-dark] details,
-html[data-cl-dark] details > summary {
+html[data-cl-dark] details>summary {
   background-color: #252830 !important;
   color: #e8eaf0 !important;
   border-color: #2e3340 !important;
 }
-html[data-cl-dark] details > summary:hover {
+
+html[data-cl-dark] details>summary:hover {
   background-color: #2e3340 !important;
 }
+
 /* Links in dark mode content */
 html[data-cl-dark] a.d2l-link,
 html[data-cl-dark] .d2l-link,
 html[data-cl-dark] [class*="d2l-main"] a:not([class*="d2l-button"]) {
   color: #60a5fa !important;
 }
+
 html[data-cl-dark] a.d2l-link:hover,
 html[data-cl-dark] .d2l-link:hover,
 html[data-cl-dark] [class*="d2l-main"] a:not([class*="d2l-button"]):hover {
@@ -321,15 +603,37 @@ html[data-cl-dark] [class*="d2l-main"] a:not([class*="d2l-button"]):hover {
 }
 
 /* ── Font upgrade (non-intrusive) ── */
-body, .d2l-body, .d2l-typography, td, th, p, span, div, a, button {
+body,
+.d2l-body,
+.d2l-typography,
+td,
+th,
+p,
+span,
+div,
+a,
+button {
   font-family: var(--cl-font) !important;
 }
 
 /* ── Scrollbars ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--cl-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--cl-text-muted); }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cl-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cl-text-muted);
+}
 
 /* ═══════════════════════════════════════════════════
    ASSIGNMENT TABLE ROW COLOR BORDERS
@@ -340,9 +644,10 @@ tr.cl-row-graded,
   border-left: 4px solid #16a34a !important;
   background-color: rgba(22, 163, 74, 0.04) !important;
 }
+
 html[data-cl-dark] tr.cl-row-graded,
 html[data-cl-dark] .d2l-table-row.cl-row-graded {
-  background-color: rgba(22, 163, 74, 0.08) !important;
+  background-color: transparent !important;
 }
 
 tr.cl-row-submitted,
@@ -350,9 +655,10 @@ tr.cl-row-submitted,
   border-left: 4px solid #2563eb !important;
   background-color: rgba(37, 99, 235, 0.04) !important;
 }
+
 html[data-cl-dark] tr.cl-row-submitted,
 html[data-cl-dark] .d2l-table-row.cl-row-submitted {
-  background-color: rgba(37, 99, 235, 0.08) !important;
+  background-color: transparent !important;
 }
 
 tr.cl-row-missing,
@@ -360,10 +666,12 @@ tr.cl-row-missing,
   border-left: 4px solid #dc2626 !important;
   background-color: rgba(220, 38, 38, 0.04) !important;
 }
+
 html[data-cl-dark] tr.cl-row-missing,
 html[data-cl-dark] .d2l-table-row.cl-row-missing {
-  background-color: rgba(220, 38, 38, 0.08) !important;
+  background-color: transparent !important;
 }
+
 /* Red "not submitted" icon indicator on the assignment name cell */
 tr.cl-row-missing td:first-child::after,
 .d2l-table-row.cl-row-missing td:first-child::after {
@@ -385,14 +693,14 @@ table.d2l-table {
   box-shadow: var(--cl-shadow) !important;
 }
 
-.d2l-table > * > tr > * {
+.d2l-table>*>tr>* {
   padding: 10px 14px !important;
   font-size: 13px !important;
   line-height: 1.5 !important;
 }
 
-.d2l-table > thead > tr > th,
-.d2l-table > * > tr.d2l-table-header > th {
+.d2l-table>thead>tr>th,
+.d2l-table>*>tr.d2l-table-header>th {
   font-size: 11px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
@@ -401,7 +709,7 @@ table.d2l-table {
   color: var(--cl-text-muted) !important;
 }
 
-.d2l-table > tbody > tr:hover > td {
+.d2l-table>tbody>tr:hover>td {
   background-color: var(--cl-surface-2) !important;
   transition: background-color 0.12s ease;
 }
@@ -420,25 +728,34 @@ table.d2l-table {
   margin: 8px 0;
   max-width: 100%;
 }
+
 .cl-grade-banner-inner {
   display: flex;
   align-items: stretch;
   width: 100%;
 }
+
 /* Stats row */
 .cl-grade-banner-stats {
   display: flex;
   align-items: stretch;
   flex: 1;
 }
+
 .cl-grade-banner-stats .cl-grade-stat {
   flex: 1;
   padding: 7px 10px;
   text-align: center;
   border-right: 1px solid var(--cl-border);
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.cl-grade-banner-stats .cl-grade-stat:last-child { border-right: none; }
+
+.cl-grade-banner-stats .cl-grade-stat:last-child {
+  border-right: none;
+}
+
 .cl-grade-banner .cl-stat-value {
   font-size: 15px;
   font-weight: 700;
@@ -446,6 +763,7 @@ table.d2l-table {
   line-height: 1.2;
   white-space: nowrap;
 }
+
 .cl-grade-banner .cl-stat-label {
   font-size: 9px;
   text-transform: uppercase;
@@ -454,10 +772,22 @@ table.d2l-table {
   margin-top: 1px;
   font-weight: 500;
 }
-.cl-grade-banner .cl-stat-value.great { color: #16a34a; }
-.cl-grade-banner .cl-stat-value.good  { color: #65a30d; }
-.cl-grade-banner .cl-stat-value.avg   { color: #d97706; }
-.cl-grade-banner .cl-stat-value.poor  { color: #dc2626; }
+
+.cl-grade-banner .cl-stat-value.great {
+  color: #16a34a;
+}
+
+.cl-grade-banner .cl-stat-value.good {
+  color: #65a30d;
+}
+
+.cl-grade-banner .cl-stat-value.avg {
+  color: #d97706;
+}
+
+.cl-grade-banner .cl-stat-value.poor {
+  color: #dc2626;
+}
 
 /* What-If section */
 .cl-grade-banner-whatif {
@@ -469,6 +799,7 @@ table.d2l-table {
   background: var(--cl-surface-2);
   flex-shrink: 0;
 }
+
 .cl-grade-banner-whatif .cl-whatif-label {
   font-size: 10px;
   font-weight: 600;
@@ -477,6 +808,7 @@ table.d2l-table {
   letter-spacing: 0.4px;
   white-space: nowrap;
 }
+
 .cl-grade-banner-whatif #cl-whatif-input {
   width: 48px;
   padding: 4px 6px;
@@ -489,15 +821,18 @@ table.d2l-table {
   font-family: var(--cl-font) !important;
   transition: border-color 0.15s ease;
 }
+
 .cl-grade-banner-whatif #cl-whatif-input:focus {
   border-color: #006fbf !important;
   outline: none !important;
-  box-shadow: 0 0 0 2px rgba(0,111,191,0.15) !important;
+  box-shadow: 0 0 0 2px rgba(0, 111, 191, 0.15) !important;
 }
+
 .cl-grade-banner-whatif .cl-whatif-pct {
   font-size: 12px;
   color: var(--cl-text-muted);
 }
+
 .cl-grade-banner-whatif .cl-whatif-result {
   font-size: 12px;
   font-weight: 600;
@@ -509,74 +844,186 @@ table.d2l-table {
   border: 1px solid var(--cl-border);
   transition: all var(--cl-transition);
 }
-.cl-grade-banner-whatif .cl-whatif-result.great { color: #16a34a; border-color: rgba(22,163,74,0.3); background: rgba(22,163,74,0.06); }
-.cl-grade-banner-whatif .cl-whatif-result.good  { color: #65a30d; border-color: rgba(101,163,13,0.3); background: rgba(101,163,13,0.06); }
-.cl-grade-banner-whatif .cl-whatif-result.avg   { color: #d97706; border-color: rgba(217,119,6,0.3); background: rgba(217,119,6,0.06); }
-.cl-grade-banner-whatif .cl-whatif-result.poor  { color: #dc2626; border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.06); }
+
+.cl-grade-banner-whatif .cl-whatif-result.great {
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.3);
+  background: rgba(22, 163, 74, 0.06);
+}
+
+.cl-grade-banner-whatif .cl-whatif-result.good {
+  color: #65a30d;
+  border-color: rgba(101, 163, 13, 0.3);
+  background: rgba(101, 163, 13, 0.06);
+}
+
+.cl-grade-banner-whatif .cl-whatif-result.avg {
+  color: #d97706;
+  border-color: rgba(217, 119, 6, 0.3);
+  background: rgba(217, 119, 6, 0.06);
+}
+
+.cl-grade-banner-whatif .cl-whatif-result.poor {
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.3);
+  background: rgba(220, 38, 38, 0.06);
+}
 
 /* ═══════════════════════════════════════════════════
    SEARCH SPOTLIGHT — polished command palette
    ═══════════════════════════════════════════════════ */
 #cl-spotlight-overlay {
-  position: fixed; inset: 0; z-index: 999999;
-  background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
-  display: flex; align-items: flex-start; justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   padding-top: 18vh;
-  opacity: 0; pointer-events: none; transition: opacity 0.18s ease;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
 }
-#cl-spotlight-overlay.cl-visible { opacity: 1; pointer-events: all; }
+
+#cl-spotlight-overlay.cl-visible {
+  opacity: 1;
+  pointer-events: all;
+}
 
 #cl-spotlight-box {
-  width: 520px; max-width: calc(100vw - 40px);
+  width: 520px;
+  max-width: calc(100vw - 40px);
   background: var(--cl-surface);
   border-radius: 12px;
   border: 1px solid var(--cl-border);
-  box-shadow: 0 16px 70px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05);
-  overflow: hidden; font-family: var(--cl-font);
-  transform: scale(0.95) translateY(-12px); transition: transform 0.16s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 16px 70px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  font-family: var(--cl-font);
+  transform: scale(0.95) translateY(-12px);
+  transition: transform 0.16s cubic-bezier(.16, 1, .3, 1);
 }
-#cl-spotlight-overlay.cl-visible #cl-spotlight-box { transform: scale(1) translateY(0); }
+
+#cl-spotlight-overlay.cl-visible #cl-spotlight-box {
+  transform: scale(1) translateY(0);
+}
 
 #cl-spotlight-input-wrap {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 16px; border-bottom: 1px solid var(--cl-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--cl-border);
 }
-#cl-spotlight-input-wrap svg { width: 18px; height: 18px; color: var(--cl-text-muted); flex-shrink: 0; opacity: 0.6; }
+
+#cl-spotlight-input-wrap svg {
+  width: 18px;
+  height: 18px;
+  color: var(--cl-text-muted);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
 #cl-spotlight-input {
-  flex: 1; border: none !important; outline: none !important; box-shadow: none !important;
-  background: transparent; font-size: 15px; font-family: var(--cl-font);
-  color: var(--cl-text); font-weight: 400; letter-spacing: -0.01em;
+  flex: 1;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent;
+  font-size: 15px;
+  font-family: var(--cl-font);
+  color: var(--cl-text);
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
-#cl-spotlight-input::placeholder { color: var(--cl-text-muted); opacity: 0.7; }
-#cl-spotlight-results { max-height: 320px; overflow-y: auto; padding: 4px; scrollbar-width: thin; }
+
+#cl-spotlight-input::placeholder {
+  color: var(--cl-text-muted);
+  opacity: 0.7;
+}
+
+#cl-spotlight-results {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 4px;
+  scrollbar-width: thin;
+}
 
 .cl-spotlight-result {
-  display: flex; align-items: center; gap: 10px; padding: 8px 10px;
-  border-radius: 8px; cursor: pointer; transition: background 0.1s ease;
-  text-decoration: none !important; color: var(--cl-text) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  text-decoration: none !important;
+  color: var(--cl-text) !important;
 }
-.cl-spotlight-result:hover, .cl-spotlight-result.cl-focused {
+
+.cl-spotlight-result:hover,
+.cl-spotlight-result.cl-focused {
   background: var(--cl-surface-2);
 }
+
 .cl-spotlight-result-icon {
-  width: 32px; height: 32px; border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   background: linear-gradient(135deg, #006fbf, #29a6ff);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
-.cl-spotlight-result-icon svg { width: 15px; height: 15px; color: #fff; }
-.cl-spotlight-result-text { flex: 1; min-width: 0; }
-.cl-spotlight-result-title { font-size: 13px; font-weight: 500; color: var(--cl-text); }
-.cl-spotlight-result-sub   { font-size: 11px; color: var(--cl-text-muted); margin-top: 1px; }
+
+.cl-spotlight-result-icon svg {
+  width: 15px;
+  height: 15px;
+  color: #fff;
+}
+
+.cl-spotlight-result-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cl-spotlight-result-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cl-text);
+}
+
+.cl-spotlight-result-sub {
+  font-size: 11px;
+  color: var(--cl-text-muted);
+  margin-top: 1px;
+}
+
 .cl-spotlight-hint {
-  padding: 8px 14px; border-top: 1px solid var(--cl-border);
-  display: flex; gap: 14px; justify-content: flex-end;
+  padding: 8px 14px;
+  border-top: 1px solid var(--cl-border);
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
   background: var(--cl-surface-2);
 }
-.cl-spotlight-hint span { font-size: 11px; color: var(--cl-text-muted); }
+
+.cl-spotlight-hint span {
+  font-size: 11px;
+  color: var(--cl-text-muted);
+}
+
 .cl-spotlight-hint kbd {
-  display: inline-block; padding: 1px 5px;
-  background: var(--cl-surface); border: 1px solid var(--cl-border);
-  border-radius: 4px; font-size: 10px; font-family: var(--cl-font); margin-right: 2px;
+  display: inline-block;
+  padding: 1px 5px;
+  background: var(--cl-surface);
+  border: 1px solid var(--cl-border);
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: var(--cl-font);
+  margin-right: 2px;
   box-shadow: 0 1px 0 var(--cl-border);
 }
 
@@ -584,21 +1031,32 @@ table.d2l-table {
    COURSE CARD QUICK ACCESS
    ═══════════════════════════════════════════════════ */
 .cl-quick-access {
-  display: flex; gap: 4px; flex-wrap: wrap; padding: 0 10px 10px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 0 10px 10px;
 }
+
 /* Page-level quick access (inside course pages) */
 .cl-page-qa {
-  display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 4px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0 4px;
 }
+
 .cl-page-qa .cl-quick-access-btn {
-  font-size: 12px; padding: 5px 12px;
+  font-size: 12px;
+  padding: 5px 12px;
 }
+
 /* Course selector dropdown quick access */
 .cl-qa-drop-btn {
   font-size: 10px !important;
   padding: 2px 7px !important;
   border-radius: 6px !important;
 }
+
 .cl-qa-dropdown {
   display: flex;
   gap: 3px;
@@ -607,32 +1065,50 @@ table.d2l-table {
   padding-top: 1px;
   background: transparent;
 }
+
 .cl-quick-access-btn {
-  display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
-  background: var(--cl-surface); border: 1px solid var(--cl-border);
-  border-radius: 6px; font-size: 11px; font-weight: 500;
-  color: var(--cl-text-muted); cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  background: var(--cl-surface);
+  border: 1px solid var(--cl-border);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cl-text-muted);
+  cursor: pointer;
   text-decoration: none !important;
   transition: background-color var(--cl-transition), border-color var(--cl-transition), color var(--cl-transition);
   font-family: var(--cl-font);
 }
+
 .cl-quick-access-btn svg {
-  width: 13px; height: 13px; flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
 }
+
 .cl-quick-access-btn span {
   white-space: nowrap;
 }
+
 .cl-quick-access-btn:hover {
-  background: var(--cl-surface-2); border-color: var(--cl-primary);
+  background: var(--cl-surface-2);
+  border-color: var(--cl-primary);
   color: var(--cl-primary) !important;
 }
+
 .cl-quick-access-btn:hover svg {
   color: var(--cl-primary) !important;
 }
+
 html[data-cl-dark] .cl-quick-access-btn:hover {
-  background: #252830; border-color: #60a5fa;
+  background: #252830;
+  border-color: #60a5fa;
   color: #60a5fa !important;
 }
+
 html[data-cl-dark] .cl-quick-access-btn:hover svg {
   color: #60a5fa !important;
 }
@@ -657,30 +1133,313 @@ html[data-cl-dark] d2l-course-selector-item[aria-selected="true"],
 html[data-cl-dark] [class*="course-selector-item"][aria-selected="true"],
 html[data-cl-dark] [class*="course-selector-item"].d2l-selected {
   background-color: #252830 !important;
+  border: 1px solid #16a34a !important;
+}
+
+/* ── HTML Editor / Rich Text Toolbar ── */
+html[data-cl-dark] d2l-htmleditor,
+html[data-cl-dark] .d2l-htmleditor-container,
+html[data-cl-dark] .d2l-htmleditor-flex-container,
+html[data-cl-dark] .d2l-htmleditor-toolbar-container,
+html[data-cl-dark] d2l-htmleditor-toolbar,
+html[data-cl-dark] [class*="d2l-htmleditor"],
+html[data-cl-dark] .tox-tinymce,
+html[data-cl-dark] .tox-toolbar,
+html[data-cl-dark] .tox-editor-header,
+html[data-cl-dark] .tox-statusbar,
+html[data-cl-dark] .tox .tox-toolbar,
+html[data-cl-dark] .tox .tox-toolbar__primary,
+html[data-cl-dark] .tox .tox-toolbar__overflow,
+html[data-cl-dark] .tox .tox-editor-header,
+html[data-cl-dark] .tox .tox-statusbar,
+html[data-cl-dark] .tox .tox-statusbar__path-item,
+html[data-cl-dark] .tox .tox-statusbar__wordcount,
+html[data-cl-dark] .tox .tox-tbtn,
+html[data-cl-dark] .tox-tinymce-aux,
+html[data-cl-dark] .tox-pop,
+html[data-cl-dark] .tox-pop__dialog,
+html[data-cl-dark] .tox-dialog,
+html[data-cl-dark] .tox-dialog__header,
+html[data-cl-dark] .tox-dialog__body,
+html[data-cl-dark] .tox-dialog__footer,
+html[data-cl-dark] .tox-menu,
+html[data-cl-dark] .tox-collection,
+html[data-cl-dark] .tox-collection__group,
+html[data-cl-dark] .tox-collection__item {
+  background-color: #1e2128 !important;
+  color: #e8eaf0 !important;
+  border-color: #2e3340 !important;
+  background: #1e2128 !important;
+  box-shadow: none !important;
+}
+html[data-cl-dark] .tox-tinymce-aux *,
+html[data-cl-dark] .tox-pop *,
+html[data-cl-dark] .tox-menu * {
+  background-color: transparent !important;
+}
+html[data-cl-dark] .tox-menu, html[data-cl-dark] .tox-pop__dialog {
+  background-color: #1e2128 !important;
+  background: #1e2128 !important;
+}
+
+
+html[data-cl-dark] .tox-collection__item-label,
+html[data-cl-dark] .tox-collection__item-accessory,
+html[data-cl-dark] .tox-collection__item-caret svg {
+  color: #e8eaf0 !important;
+  fill: #e8eaf0 !important;
+}
+
+html[data-cl-dark] .tox .tox-tbtn:hover,
+html[data-cl-dark] [class*="d2l-htmleditor-button"]:hover,
+html[data-cl-dark] .tox-collection__item:hover,
+html[data-cl-dark] .tox-collection__item--active {
+  background-color: #252830 !important;
+  background: #252830 !important;
   color: #e8eaf0 !important;
 }
 
+html[data-cl-dark] .tox-collection__item--active .tox-collection__item-label,
+html[data-cl-dark] .tox-collection__item--active .tox-collection__item-accessory,
+html[data-cl-dark] .tox-collection__item--active .tox-collection__item-caret svg {
+  color: #e8eaf0 !important;
+  fill: #e8eaf0 !important;
+}
+
+html[data-cl-dark] .tox .tox-tbtn svg,
+html[data-cl-dark] .tox .tox-statusbar__resize-handle svg {
+  fill: #e8eaf0 !important;
+}
+
+/* ── Outcomes Squishy Buttons ── */
+html[data-cl-dark] d2l-squishy-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html[data-cl-dark] .d2l-squishy-button-container {
+  background-color: #1e2128 !important;
+  border: 1px solid #2e3340 !important;
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] d2l-squishy-button[selected] .d2l-squishy-button-container,
+html[data-cl-dark] [selected].d2l-squishy-button-container,
+html[data-cl-dark] :host([selected]) .d2l-squishy-button-container {
+  background-color: #1e2128 !important;
+  border-color: var(--d2l-squishy-button-selected-color, #60a5fa) !important;
+  box-shadow: 0 0 6px rgba(96, 165, 250, 0.2) !important;
+}
+
+html[data-cl-dark] .d2l-squishy-button-container:hover {
+  background-color: #252830 !important;
+}
+
+/* ── Overall Score Levels ── */
+html[data-cl-dark] d2l-rubric-overall-score,
+html[data-cl-dark] [slot="overall-score"],
+html[data-cl-dark] div[class*="overall-score"],
+html[data-cl-dark] d2l-scroll-wrapper,
+html[data-cl-dark] .rubric-overall-score-header {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html[data-cl-dark] [class*="overall-level"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+html[data-cl-dark] [class*="overall-level"]::before,
+html[data-cl-dark] [class*="overall-level"]::after {
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+}
+
+html[data-cl-dark] .overall-level .content-container {
+  background-color: #1e2128 !important;
+  border: 1px solid #2e3340 !important;
+  color: #e8eaf0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+html[data-cl-dark] .overall-level[data-achieved] .content-container,
+html[data-cl-dark] .overall-level[selected] .content-container {
+  background-color: #252830 !important;
+  border-color: var(--d2l-color-celestine, #006fbf) !important;
+  box-shadow: 0 0 6px rgba(0, 111, 191, 0.3) !important;
+}
+
+/* ── Legacy Popup & Email Compose ── */
+html[data-cl-dark] body.d2l-popup-page,
+html[data-cl-dark] .d2l-popup,
+html[data-cl-dark] .d2l-popup-body,
+html[data-cl-dark] .d2l-form {
+  background-color: #161920 !important;
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] .d2l-popup-title,
+html[data-cl-dark] .d2l-popup-title * {
+  background-color: #1e2128 !important;
+  background: #1e2128 !important;
+  border-bottom: 1px solid #2e3340 !important;
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] .d2l-popup-buttons {
+  background-color: #1e2128 !important;
+  border-top: 1px solid #2e3340 !important;
+}
+
+html[data-cl-dark] .d2l-button {
+  background-color: #2e3340 !important;
+  color: #e8eaf0 !important;
+  border: 1px solid #5a6070 !important;
+}
+
+html[data-cl-dark] .d2l-button[primary] {
+  background-color: #006fbf !important;
+  color: #ffffff !important;
+  border-color: #004d80 !important;
+}
+
+/* Multiselect Inputs (To / Cc / Bcc Email Fields) */
+html[data-cl-dark] ul[class*="multiselect"] {
+  background-color: #161920 !important;
+  border: 1px solid #3a4050 !important;
+}
+
+html[data-cl-dark] .d2l-multiselect-choice,
+html[data-cl-dark] [class*="multiselect-choice"],
+html[data-cl-dark] .d2l-multiselect-choice * {
+  background-color: #252830 !important;
+  background: #252830 !important;
+  color: #e8eaf0 !important;
+  border: 1px solid #3a4050 !important;
+  border-radius: 4px !important;
+}
+
+html[data-cl-dark] ul[class*="multiselect"] input {
+  background: transparent !important;
+  color: #e8eaf0 !important;
+}
+
+/* File Attachments Dropzone */
+html[data-cl-dark] div[class*="filedrop"],
+html[data-cl-dark] div[class*="fileinput"] {
+  background-color: #1e2128 !important;
+  border-color: #5a6070 !important;
+}
+
+html[data-cl-dark] .d2l-fileinput-drop-msg {
+  color: #e8eaf0 !important;
+}
+
+/* ── Rubrics & Criteria ── */
+html[data-cl-dark] d2l-rubric,
+html[data-cl-dark] d2l-rubric-adapter,
+html[data-cl-dark] d2l-rubric-criteria-groups,
+html[data-cl-dark] d2l-rubric-criteria-group,
+html[data-cl-dark] table[class*="rubric"],
+html[data-cl-dark] .d2l-rubric-print-container {
+  background-color: #1e2128 !important;
+  border-color: #2e3340 !important;
+  color: #e8eaf0 !important;
+}
+
+html[data-cl-dark] d2l-rubric-criterion-cell,
+html[data-cl-dark] d2l-rubric-feedback,
+html[data-cl-dark] .cell-container,
+html[data-cl-dark] td.criterion-cell,
+html[data-cl-dark] th.criterion-name,
+html[data-cl-dark] tr.criterion-row,
+html[data-cl-dark] th[class*="criterion"],
+html[data-cl-dark] td[class*="criterion"],
+html[data-cl-dark] td.out-of,
+html[data-cl-dark] td.feedback-cell,
+html[data-cl-dark] [class*="rubric-feedback"] {
+  background-color: #1e2128 !important;
+  border-color: #2e3340 !important;
+  color: #e8eaf0 !important;
+}
+
+/* Reveal table lines subtly */
+html[data-cl-dark] d2l-rubric-criteria-group table,
+html[data-cl-dark] table[class*="rubric"],
+html[data-cl-dark] th,
+html[data-cl-dark] td {
+  border-color: #2e3340 !important;
+}
+
+/* Fix D2L adding a pastel ::before to selected rubric cells */
+html[data-cl-dark] td.criterion-cell.selected,
+html[data-cl-dark] .criterion-cell.selected .cell-container,
+html[data-cl-dark] d2l-rubric-criterion-cell[selected] .cell-container {
+  background-color: #252830 !important;
+  border: 2px solid #5a6070 !important;
+}
+
+html[data-cl-dark] td.criterion-cell::before,
+html[data-cl-dark] .cell-container::before {
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+}
+
+html[data-cl-dark] d2l-rubric-editable-score {
+  background-color: #1e2128 !important;
+}
+
 /* ═══════════════════════════════════════════════════
-   DARK MODE TOGGLE BUTTON
+   BUTTONS AND INTERACTIVE COMPONENTS
    ═══════════════════════════════════════════════════ */
 #cl-dark-toggle {
-  position: fixed; bottom: 20px; right: 20px; z-index: 99990;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--cl-surface); border: 1px solid var(--cl-border);
-  box-shadow: var(--cl-shadow); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all var(--cl-transition); font-family: var(--cl-font);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99990;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cl-surface);
+  border: 1px solid var(--cl-border);
+  box-shadow: var(--cl-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--cl-transition);
+  font-family: var(--cl-font);
 }
-#cl-dark-toggle:hover { box-shadow: var(--cl-shadow-lg); transform: scale(1.08); }
-#cl-dark-toggle svg { width: 18px; height: 18px; color: var(--cl-text-muted); }
+
+#cl-dark-toggle:hover {
+  box-shadow: var(--cl-shadow-lg);
+  transform: scale(1.08);
+}
+
+#cl-dark-toggle svg {
+  width: 18px;
+  height: 18px;
+  color: var(--cl-text-muted);
+}
 
 /* ═══════════════════════════════════════════════════
    GLOBAL PAGE POLISH — infused into D2L styles
    ═══════════════════════════════════════════════════ */
 
 /* Better page headings */
-h1.d2l-heading-1, h2.d2l-heading-2, h3.d2l-heading-3,
-.d2l-page-title, [class*="d2l-heading"] {
+h1.d2l-heading-1,
+h2.d2l-heading-2,
+h3.d2l-heading-3,
+.d2l-page-title,
+[class*="d2l-heading"] {
   font-family: var(--cl-font) !important;
   letter-spacing: -0.2px !important;
 }
@@ -691,6 +1450,7 @@ h1.d2l-heading-1, h2.d2l-heading-2, h3.d2l-heading-3,
   text-decoration: none;
   transition: color var(--cl-transition);
 }
+
 .cl-main-content a:not([class*="d2l-"]):not([class*="cl-"]):hover {
   color: var(--cl-primary);
 }

@@ -5,12 +5,12 @@
      SETTINGS
   ───────────────────────────────────────────────────────── */
   const DEFAULTS = {
-    darkMode:       false,
-    quickNav:       true,
-    gradeCalc:      true,
-    searchHotkey:   true,
+    darkMode: false,
+    quickNav: true,
+    gradeCalc: true,
+    searchHotkey: true,
     assignRowStyle: true,
-    quickAccess:    true,
+    quickAccess: true,
   };
 
   function getSettings() {
@@ -20,7 +20,7 @@
     } catch { return { ...DEFAULTS }; }
   }
   function saveSettings(s) {
-    try { localStorage.setItem('clplus_settings', JSON.stringify(s)); } catch {}
+    try { localStorage.setItem('clplus_settings', JSON.stringify(s)); } catch { }
   }
 
   let settings = getSettings();
@@ -30,7 +30,7 @@
       if (window.Global && window.Global.OrgUnitId && window.Global.OrgUnitId !== 6605) {
         return String(window.Global.OrgUnitId);
       }
-    } catch {}
+    } catch { }
 
     const ouParam = new URLSearchParams(window.location.search).get('ou');
     if (ouParam) return ouParam;
@@ -43,13 +43,13 @@
         const parsed = JSON.parse(ctx);
         if (parsed.orgUnitId && parsed.orgUnitId !== '6605') return parsed.orgUnitId;
       }
-    } catch {}
+    } catch { }
 
     return null; // homepage or unknown
   }
 
   const pathname = window.location.pathname.toLowerCase();
-  const search   = window.location.search.toLowerCase();
+  const search = window.location.search.toLowerCase();
 
   function isPage(...fragments) {
     return fragments.some(f => pathname.includes(f) || search.includes(f));
@@ -62,19 +62,19 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   }
   const I = {
-    home:    svg('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>'),
-    grades:  svg('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'),
-    upload:  svg('<polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>'),
-    chat:    svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),
-    book:    svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'),
-    users:   svg('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
-    bell:    svg('<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'),
-    cal:     svg('<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'),
-    search:  svg('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
-    check:   svg('<polyline points="20,6 9,17 4,12"/>'),
-    arrow:   svg('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>'),
-    moon:    svg('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'),
-    sun:     svg('<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'),
+    home: svg('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>'),
+    grades: svg('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'),
+    upload: svg('<polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>'),
+    chat: svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),
+    book: svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'),
+    users: svg('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+    bell: svg('<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'),
+    cal: svg('<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'),
+    search: svg('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
+    check: svg('<polyline points="20,6 9,17 4,12"/>'),
+    arrow: svg('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>'),
+    moon: svg('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'),
+    sun: svg('<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'),
     quiz: svg('<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>'),
   };
 
@@ -139,6 +139,39 @@
     [class*="course-selector-item"].d2l-selected {
       background-color: #252830 !important;
       color: #e8eaf0 !important;
+    }
+
+    .d2l-floating-buttons-inner-container,
+    .d2l-floating-buttons-container,
+    d2l-floating-buttons {
+      background-color: transparent !important;
+      color: #e8eaf0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .d2l-floating-buttons-inner-container button,
+    .d2l-floating-buttons-inner-container a,
+    .d2l-floating-buttons-inner-container [class*="d2l-button"],
+    .d2l-floating-buttons-container button,
+    .d2l-floating-buttons-container a,
+    .d2l-floating-buttons-container [class*="d2l-button"] {
+      background-color: rgba(15, 23, 42, 0.22) !important;
+      color: #e8eaf0 !important;
+      border: 1px solid rgba(148, 163, 184, 0.55) !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+    }
+
+    .d2l-floating-buttons-inner-container button:hover,
+    .d2l-floating-buttons-inner-container a:hover,
+    .d2l-floating-buttons-inner-container [class*="d2l-button"]:hover,
+    .d2l-floating-buttons-container button:hover,
+    .d2l-floating-buttons-container a:hover,
+    .d2l-floating-buttons-container [class*="d2l-button"]:hover {
+      background-color: rgba(30, 41, 59, 0.28) !important;
+      border-color: rgba(191, 219, 254, 0.8) !important;
     }
 
     /* ── Course cards (homepage) ── */
@@ -246,21 +279,37 @@
     [style*="color:#ff"],
     [style*="color: #ff"],
     [style*="color:#FF"],
-    [style*="color: #FF"] {
+    [style*="color: #FF"],
+    [style*="color: black" i],
+    [style*="color:black" i],
+    [style*="color: #000" i],
+    [style*="color:#000" i] {
       color: #e8eaf0 !important;
     }
 
-    [style*="background-color:#FFF1EA"],
-    [style*="background-color: #FFF1EA"],
-    [style*="background-color:#FFEDE8"],
-    [style*="background-color: #FFEDE8"],
-    [style*="background-color:#fff1ea"],
-    [style*="background-color: #fff1ea"],
-    [style*="background-color: rgb(255, 241, 234)"],
-    [style*="background-color: rgb(255,241,234)"] {
+    /* Clear inline-styled pastel grade blocks and exact DOM indicator swatches */
+    .dco_c[style*="border-radius"][style*="background-color"],
+    .d2l-grades-score div[style*="background-color"],
+    td.d_gc div[style*="background-color"],
+    [style*="background-color:#E8F8FF" i], [style*="rgb(232, 248, 255)"], [style*="rgb(232,248,255)"],
+    [style*="background-color:#EAFFEA" i], [style*="rgb(234, 255, 234)"], [style*="rgb(234,255,234)"],
+    [style*="background-color:#FFEDE8" i], [style*="rgb(255, 237, 232)"], [style*="rgb(255,237,232)"],
+    [style*="background-color:#FFF9D6" i], [style*="rgb(255, 249, 214)"], [style*="rgb(255,249,214)"],
+    [style*="background-color:#FFF1EA" i], [style*="rgb(255, 241, 234)"], [style*="rgb(255,241,234)"],
+    [style*="background-color:#F5F9FF" i], [style*="rgb(245, 249, 255)"], [style*="rgb(245,249,255)"],
+    [style*="background-color:#F9F9F9" i], [style*="rgb(249, 249, 249)"], [style*="rgb(249,249,249)"] {
       background-color: transparent !important;
       box-shadow: none !important;
       border: none !important;
+    }
+
+    .cl-dark-grade-bg-fix {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    .cl-dark-grade-text-fix {
+      color: #e8eaf0 !important;
     }
 
     /* Keep course selector item hover dark in dropdowns */
@@ -297,6 +346,195 @@
       border-color: #2e3340 !important;
       background-color: #2e3340 !important;
     }
+
+    /* Quiz info table (Current User / Time Limit / Attempts) */
+    table.d_FG,
+    table.d_FG tbody,
+    table.d_FG tr,
+    table.d_FG td,
+    table.d_FG th,
+    table.d_FG .fl_n,
+    table.d_FG .fct_w {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+    table.d_FG tr:hover,
+    table.d_FG tr:hover > td,
+    table.d_FG td:hover,
+    table.d_FG th:hover,
+    table.d_FG .fl_n:hover,
+    table.d_FG .fct_w:hover {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+    table.d_FG span {
+      color: #e8eaf0 !important;
+    }
+    
+    /* ── HTML Editor / Rich Text Toolbar ── */
+    d2l-htmleditor,
+    .d2l-htmleditor-container,
+    .d2l-htmleditor-flex-container,
+    .d2l-htmleditor-toolbar-container,
+    d2l-htmleditor-toolbar,
+    [class*="d2l-htmleditor"],
+    .tox-tinymce,
+    .tox-toolbar,
+    .tox-editor-header,
+    .tox-statusbar,
+    .tox .tox-toolbar,
+    .tox .tox-toolbar__primary,
+    .tox .tox-toolbar__overflow,
+    .tox .tox-editor-header,
+    .tox .tox-statusbar,
+    .tox .tox-statusbar__path-item,
+    .tox .tox-statusbar__wordcount,
+    .tox .tox-tbtn,
+    .tox-tinymce-aux,
+    .tox-menu,
+    .tox-collection,
+    .tox-collection__group,
+    .tox-collection__item {
+      background-color: #1e2128 !important;
+      color: #e8eaf0 !important;
+      border-color: #2e3340 !important;
+      background: #1e2128 !important;
+    }
+    .tox-collection__item-label,
+    .tox-collection__item-accessory,
+    .tox-collection__item-caret svg {
+      color: #e8eaf0 !important;
+      fill: #e8eaf0 !important;
+    }
+    .tox .tox-tbtn:hover, [class*="d2l-htmleditor-button"]:hover,
+    .tox-collection__item:hover,
+    .tox-collection__item--active {
+      background-color: #252830 !important;
+      background: #252830 !important;
+      color: #e8eaf0 !important;
+    }
+    .tox-collection__item--active .tox-collection__item-label,
+    .tox-collection__item--active .tox-collection__item-accessory,
+    .tox-collection__item--active .tox-collection__item-caret svg {
+      color: #e8eaf0 !important;
+      fill: #e8eaf0 !important;
+    }
+    .tox .tox-tbtn svg {
+      fill: #e8eaf0 !important;
+    }
+    .tox .tox-statusbar__resize-handle svg {
+      fill: #e8eaf0 !important;
+    }
+    
+    /* ── Outcomes Squishy Buttons ── */
+    d2l-squishy-button {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .d2l-squishy-button-container {
+      background-color: #1e2128 !important;
+      border: 1px solid #2e3340 !important;
+      color: #e8eaf0 !important;
+    }
+    d2l-rubric-criterion-cell,
+    d2l-rubric-feedback,
+    .cell-container,
+    td.criterion-cell,
+    th.criterion-name,
+    tr.criterion-row,
+    th[class*="criterion"],
+    td[class*="criterion"],
+    td.out-of,
+    td.feedback-cell,
+    [class*="rubric-feedback"] {
+      background-color: #1e2128 !important;
+      border-color: #2e3340 !important;
+      color: #e8eaf0 !important;
+    }
+    :host([selected]) .d2l-squishy-button-container,
+    [selected] .d2l-squishy-button-container,
+    d2l-squishy-button[selected] .d2l-squishy-button-container {
+      background-color: #1e2128 !important;
+      border-color: var(--d2l-squishy-button-selected-color, #60a5fa) !important;
+      box-shadow: 0 0 6px rgba(96, 165, 250, 0.2) !important;
+    }
+    .d2l-squishy-button-container:hover {
+      background-color: #252830 !important;
+    }
+
+    /* ── Overall Score Levels ── */
+    d2l-rubric-overall-score,
+    [slot="overall-score"],
+    div[class*="overall-score"],
+    d2l-scroll-wrapper,
+    .rubric-overall-score-header {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+    [class*="overall-level"] {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    [class*="overall-level"]::before,
+    [class*="overall-level"]::after {
+      display: none !important;
+      opacity: 0 !important;
+      background: transparent !important;
+    }
+    .overall-level .content-container {
+      background-color: #1e2128 !important;
+      border: 1px solid #2e3340 !important;
+      color: #e8eaf0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    .overall-level[data-achieved] .content-container,
+    .overall-level[selected] .content-container {
+      background-color: #252830 !important;
+      border-color: var(--d2l-color-celestine, #006fbf) !important;
+      box-shadow: 0 0 6px rgba(0, 111, 191, 0.3) !important;
+    }
+
+    /* ── Rubrics & Criteria ── */
+    d2l-rubric,
+    d2l-rubric-adapter,
+    d2l-rubric-criteria-groups,
+    d2l-rubric-criteria-group,
+    table[class*="rubric"],
+    .d2l-rubric-print-container {
+      background-color: #1e2128 !important;
+      border-color: #2e3340 !important;
+      color: #e8eaf0 !important;
+
+    
+    /* Reveal table lines subtly */
+    d2l-rubric-criteria-group table,
+    table[class*="rubric"], 
+    th, td {
+      border-color: #2e3340 !important;
+    }
+
+    /* Fix D2L adding a pastel ::before to selected rubric cells */
+    td.criterion-cell.selected,
+    .criterion-cell.selected .cell-container,
+    :host([selected]) .cell-container {
+      background-color: #252830 !important;
+      border: 2px solid #5a6070 !important;
+    }
+    td.criterion-cell::before,
+    .cell-container::before {
+      display: none !important;
+      opacity: 0 !important;
+      background: transparent !important;
+    }
+    d2l-rubric-editable-score {
+      background-color: #1e2128 !important;
+    }
   `;
 
   // Inject dark style into a shadow root
@@ -311,6 +549,121 @@
   // Remove dark style from a shadow root
   function undarkifyShadow(root) {
     root?.querySelector('#cl-shadow-dark')?.remove();
+  }
+
+  function updateIframesDarkMode(apply) {
+    const frames = document.querySelectorAll('iframe, frame');
+    frames.forEach(frame => {
+      let doc;
+      try {
+        doc = frame.contentDocument || frame.contentWindow?.document;
+      } catch {
+        return;
+      }
+      if (!doc || !doc.head) return;
+
+      if (apply) {
+        if (doc.getElementById('cl-iframe-dark')) return;
+        const style = doc.createElement('style');
+        style.id = 'cl-iframe-dark';
+        style.textContent = `
+          html, body {
+            background-color: #0d0f13 !important;
+            color: #e8eaf0 !important;
+          }
+          [style*="background-color:#FFF"],
+          [style*="background-color: #FFF"],
+          [style*="background-color:#fff"],
+          [style*="background-color: #fff"],
+          .dco, .dco_c, .dl, .dl > li {
+            background-color: #1e2128 !important;
+            color: #e8eaf0 !important;
+            border-color: #2e3340 !important;
+          }
+          .d2l-floating-buttons-inner-container,
+          .d2l-floating-buttons-container,
+          d2l-floating-buttons {
+            background-color: transparent !important;
+            color: #e8eaf0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+          }
+          .d2l-floating-buttons-inner-container button,
+          .d2l-floating-buttons-inner-container a,
+          .d2l-floating-buttons-inner-container [class*="d2l-button"],
+          .d2l-floating-buttons-container button,
+          .d2l-floating-buttons-container a,
+          .d2l-floating-buttons-container [class*="d2l-button"] {
+            background-color: rgba(15, 23, 42, 0.22) !important;
+            color: #e8eaf0 !important;
+            border: 1px solid rgba(148, 163, 184, 0.55) !important;
+            border-radius: 999px !important;
+            box-shadow: none !important;
+          }
+          .d2l-floating-buttons-inner-container button:hover,
+          .d2l-floating-buttons-inner-container a:hover,
+          .d2l-floating-buttons-inner-container [class*="d2l-button"]:hover,
+          .d2l-floating-buttons-container button:hover,
+          .d2l-floating-buttons-container a:hover,
+          .d2l-floating-buttons-container [class*="d2l-button"]:hover {
+            background-color: rgba(30, 41, 59, 0.28) !important;
+            border-color: rgba(191, 219, 254, 0.8) !important;
+          }
+          #UnreadTreeItem5894302,
+          [id^="UnreadTreeItem"],
+          [id*="UnreadTreeItem"] {
+            color: #111827 !important;
+            font-weight: 700 !important;
+            opacity: 1 !important;
+            filter: none !important;
+            -webkit-text-fill-color: #111827 !important;
+          }
+          [id^="TreeItem"] > div:not(.d2l-clear):last-of-type .d2l-textblock,
+          [id^="TreeItem"] > div:not(.d2l-clear):last-of-type .d2l-textblock-strong {
+            color: #111827 !important;
+            font-weight: 700 !important;
+          }
+          .d2l-textblock-strong,
+          .d2l-textblock,
+          .d2l-link,
+          .dl a,
+          .dl span,
+          .ds_i,
+          .ds_i strong {
+            color: #e8eaf0 !important;
+          }
+
+          table.d_FG,
+          table.d_FG tbody,
+          table.d_FG tr,
+          table.d_FG td,
+          table.d_FG th,
+          table.d_FG .fl_n,
+          table.d_FG .fct_w {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+          }
+          table.d_FG tr:hover,
+          table.d_FG tr:hover > td,
+          table.d_FG td:hover,
+          table.d_FG th:hover,
+          table.d_FG .fl_n:hover,
+          table.d_FG .fct_w:hover {
+            background: transparent !important;
+            background-color: transparent !important;
+          }
+          table.d_FG label,
+          table.d_FG span {
+            color: #e8eaf0 !important;
+          }
+        `;
+        doc.head.appendChild(style);
+      } else {
+        doc.getElementById('cl-iframe-dark')?.remove();
+      }
+    });
   }
 
   // Walk all shadow roots in the document and apply/remove dark
@@ -351,6 +704,7 @@
       }
 
       updateAllShadowRoots(true);
+      updateIframesDarkMode(true);
       fixGradeInlineColors();
 
       passes += 1;
@@ -364,16 +718,38 @@
   // Fix D2L's hardcoded inline background-color on grade percentage cells
   function fixGradeInlineColors() {
     if (!settings.darkMode) return;
-    const pastelColors = ['#E8F8FF', '#EAFFEA', '#FFEDE8', '#FFF9D6', '#e8f8ff', '#eaffea', '#ffede8', '#fff9d6'];
+    const pastelColors = [
+      '#E8F8FF', '#EAFFEA', '#FFEDE8', '#FFF9D6', '#FFF1EA',
+      '#e8f8ff', '#eaffea', '#ffede8', '#fff9d6', '#fff1ea',
+      'rgb(232, 248, 255)', 'rgb(234, 255, 234)', 'rgb(255, 237, 232)',
+      'rgb(255, 249, 214)', 'rgb(255, 241, 234)',
+      'rgb(232,248,255)', 'rgb(234,255,234)', 'rgb(255,237,232)',
+      'rgb(255,249,214)', 'rgb(255,241,234)'
+    ];
     document.querySelectorAll('div[style*="background-color"]').forEach(el => {
       const style = el.getAttribute('style') || '';
       for (const pc of pastelColors) {
         if (style.includes(pc)) {
-          el.style.backgroundColor = 'transparent';
-          // Also fix the text inside
-          el.querySelectorAll('span').forEach(s => { s.style.color = '#e8eaf0'; });
+          // Use classes so turning off dark mode cleanly restores light mode colors.
+          el.classList.add('cl-dark-grade-bg-fix');
+          el.querySelectorAll('span').forEach(s => s.classList.add('cl-dark-grade-text-fix'));
           break;
         }
+      }
+    });
+  }
+
+  function restoreGradeInlineColors() {
+    // Remove class-based grade dark fixes.
+    document.querySelectorAll('.cl-dark-grade-bg-fix').forEach(el => el.classList.remove('cl-dark-grade-bg-fix'));
+    document.querySelectorAll('.cl-dark-grade-text-fix').forEach(el => el.classList.remove('cl-dark-grade-text-fix'));
+
+    // Cleanup legacy inline color mutations from older versions.
+    document.querySelectorAll('[style]').forEach(el => {
+      const style = el.getAttribute('style') || '';
+
+      if (style.includes('color: #e8eaf0') || style.includes('color:#e8eaf0') || style.includes('color: rgb(232, 234, 240)')) {
+        el.style.color = '';
       }
     });
   }
@@ -427,10 +803,21 @@
           html[data-cl-dark] .d2l-le-navbar a,
           html[data-cl-dark] [class*="d2l-navbar"] a { color: #e8eaf0 !important; }
           /* Tables */
-          html[data-cl-dark] .d2l-table > tbody,
-          html[data-cl-dark] .d2l-table > tfoot { background-color: #161920 !important; }
+          html[data-cl-dark] .d2l-table,
+          html[data-cl-dark] d2l-table-wrapper,
+          html[data-cl-dark] .d2l-grid-container,
+          html[data-cl-dark] .d_gempty,
+          html[data-cl-dark] .d2l-table.d_gempty > tbody,
+          html[data-cl-dark] .d_gempty > tbody,
+          html[data-cl-dark] .d_gempty > tbody > tr,
+          html[data-cl-dark] .d_gempty > tbody > tr > td { 
+            background-color: transparent !important; 
+            border: none !important; box-shadow: none !important;
+          }
+          html[data-cl-dark] .d2l-table:not(.d_gempty) > tbody,
+          html[data-cl-dark] .d2l-table:not(.d_gempty) > tfoot { background-color: #161920 !important; }
           html[data-cl-dark] .d2l-table > * > tr:hover > * { background-color: #1e2128 !important; }
-          html[data-cl-dark] td, html[data-cl-dark] th { color: #e8eaf0 !important; border-color: #2e3340 !important; }
+          html[data-cl-dark] td, html[data-cl-dark] th { border-color: #2e3340 !important; }
           /* White cards/panels */
           html[data-cl-dark] .d2l-card, html[data-cl-dark] [class*="d2l-panel"],
           html[data-cl-dark] .d2l-widget, html[data-cl-dark] [class*="widget"],
@@ -467,21 +854,23 @@
           html[data-cl-dark] .d2l-enrollments-search-widget {
             background-color: #1e2128 !important; border-color: #2e3340 !important; color: #e8eaf0 !important;
           }
-          /* Grade percentage inline bg override — D2L hardcodes these */
-          html[data-cl-dark] div[style*="background-color:#E8F8FF"],
-          html[data-cl-dark] div[style*="background-color: #E8F8FF"],
-          html[data-cl-dark] div[style*="background-color:#EAFFEA"],
-          html[data-cl-dark] div[style*="background-color: #EAFFEA"],
-          html[data-cl-dark] div[style*="background-color:#FFEDE8"],
-          html[data-cl-dark] div[style*="background-color: #FFEDE8"],
-          html[data-cl-dark] div[style*="background-color:#FFF9D6"],
-          html[data-cl-dark] div[style*="background-color: #FFF9D6"] {
+          /* Generic catch-all and exact matching for hardcoded inline grade swatches */
+          html[data-cl-dark] .dco_c[style*="border-radius"][style*="background-color"],
+          html[data-cl-dark] .d2l-grades-score div[style*="background-color"],
+          html[data-cl-dark] td.d_gc div[style*="background-color"],
+          html[data-cl-dark] div[style*="background-color:#E8F8FF" i], html[data-cl-dark] div[style*="rgb(232, 248, 255)"], html[data-cl-dark] div[style*="rgb(232,248,255)"],
+          html[data-cl-dark] div[style*="background-color:#EAFFEA" i], html[data-cl-dark] div[style*="rgb(234, 255, 234)"], html[data-cl-dark] div[style*="rgb(234,255,234)"],
+          html[data-cl-dark] div[style*="background-color:#FFEDE8" i], html[data-cl-dark] div[style*="rgb(255, 237, 232)"], html[data-cl-dark] div[style*="rgb(255,237,232)"],
+          html[data-cl-dark] div[style*="background-color:#FFF9D6" i], html[data-cl-dark] div[style*="rgb(255, 249, 214)"], html[data-cl-dark] div[style*="rgb(255,249,214)"],
+          html[data-cl-dark] div[style*="background-color:#FFF1EA" i], html[data-cl-dark] div[style*="rgb(255, 241, 234)"], html[data-cl-dark] div[style*="rgb(255,241,234)"],
+          html[data-cl-dark] div[style*="background-color:#F5F9FF" i], html[data-cl-dark] div[style*="rgb(245, 249, 255)"], html[data-cl-dark] div[style*="rgb(245,249,255)"],
+          html[data-cl-dark] div[style*="background-color:#F9F9F9" i], html[data-cl-dark] div[style*="rgb(249, 249, 249)"], html[data-cl-dark] div[style*="rgb(249,249,249)"],
+          html[data-cl-dark] .cl-dark-grade-bg-fix {
             background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
           }
-          html[data-cl-dark] div[style*="background-color:#E8F8FF"] span,
-          html[data-cl-dark] div[style*="background-color:#EAFFEA"] span,
-          html[data-cl-dark] div[style*="background-color:#FFEDE8"] span,
-          html[data-cl-dark] div[style*="background-color:#FFF9D6"] span {
+          html[data-cl-dark] .cl-dark-grade-text-fix {
             color: #e8eaf0 !important;
           }
         `;
@@ -489,6 +878,7 @@
       }
       // Also inject into all existing shadow roots
       updateAllShadowRoots(true);
+      updateIframesDarkMode(true);
       scheduleDarkRefreshPasses();
       // Fix inline grade percentage backgrounds
       fixGradeInlineColors();
@@ -515,6 +905,8 @@
       }
       if (darkStyleEl) { darkStyleEl.remove(); darkStyleEl = null; }
       updateAllShadowRoots(false);
+      updateIframesDarkMode(false);
+      restoreGradeInlineColors();
     }
   }
 
@@ -686,10 +1078,10 @@
   }
 
   function letterGrade(pct) {
-    if (pct >= 90) return 'A+'; if (pct >= 85) return 'A';  if (pct >= 80) return 'A-';
-    if (pct >= 77) return 'B+'; if (pct >= 73) return 'B';  if (pct >= 70) return 'B-';
-    if (pct >= 67) return 'C+'; if (pct >= 63) return 'C';  if (pct >= 60) return 'C-';
-    if (pct >= 57) return 'D+'; if (pct >= 53) return 'D';  if (pct >= 50) return 'D-';
+    if (pct >= 90) return 'A+'; if (pct >= 85) return 'A'; if (pct >= 80) return 'A-';
+    if (pct >= 77) return 'B+'; if (pct >= 73) return 'B'; if (pct >= 70) return 'B-';
+    if (pct >= 67) return 'C+'; if (pct >= 63) return 'C'; if (pct >= 60) return 'C-';
+    if (pct >= 57) return 'D+'; if (pct >= 53) return 'D'; if (pct >= 50) return 'D-';
     return 'F';
   }
   function gradeClass(pct) {
@@ -725,7 +1117,7 @@
     // Locate the "Add to ePortfolio" button or its container
     const buttons = Array.from(document.querySelectorAll('button, a.d2l-button'));
     let portfolioBtn = buttons.find(b => b.textContent && b.textContent.includes('ePortfolio'));
-    
+
     if (!portfolioBtn) {
       portfolioBtn = document.querySelector('.d2l-action-buttons button, .d2l-action-buttons a');
     }
@@ -769,7 +1161,7 @@
       );
       (main || document.body).insertAdjacentElement('afterbegin', banner);
     }
-}
+  }
 
   /* ─────────────────────────────────────────────────────────
       4. CTRL+K SEARCH SPOTLIGHT — with course nav, default links, and enrollments
@@ -784,7 +1176,7 @@
   function getSpotlightLinks() {
     const ou = getOrgUnitId();
     return [
-      { title: 'My Home',            sub: 'Homepage',           href: '/d2l/home',                                                    icon: I.home },
+      { title: 'My Home', sub: 'Homepage', href: '/d2l/home', icon: I.home },
     ];
   }
 
@@ -844,15 +1236,15 @@
     // Fallback: if navbar scraping yielded nothing, construct standard course links
     if (links.length === 0) {
       const standardLinks = [
-        { title: 'Course Home',    href: `/d2l/home/${ou}`,                     icon: I.home },
-        { title: 'Content',        href: `/d2l/le/content/${ou}/Home`,          icon: I.book },
-        { title: 'Grades',         href: `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}`, icon: I.grades },
-        { title: 'Dropbox',        href: `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}`, icon: I.upload },
-        { title: 'Discussions',    href: `/d2l/le/discussion/${ou}/list`,       icon: I.chat },
-        { title: 'Quizzes',        href: `/d2l/le/quizzes/${ou}/quizzes_list.d2l`, icon: I.quiz },
-        { title: 'Classlist',      href: `/d2l/lms/classlist/classlist.d2l?ou=${ou}`, icon: I.users },
-        { title: 'Groups',         href: `/d2l/le/groups/${ou}/home`,           icon: I.users },
-        { title: 'Surveys',        href: `/d2l/le/surveys/${ou}/surveys_list.d2l`, icon: svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>') },
+        { title: 'Course Home', href: `/d2l/home/${ou}`, icon: I.home },
+        { title: 'Content', href: `/d2l/le/content/${ou}/Home`, icon: I.book },
+        { title: 'Grades', href: `/d2l/lms/grades/gradesGrid/grid.d2l?ou=${ou}`, icon: I.grades },
+        { title: 'Dropbox', href: `/d2l/lms/dropbox/user/folders_list.d2l?ou=${ou}`, icon: I.upload },
+        { title: 'Discussions', href: `/d2l/le/discussion/${ou}/list`, icon: I.chat },
+        { title: 'Quizzes', href: `/d2l/le/quizzes/${ou}/quizzes_list.d2l`, icon: I.quiz },
+        { title: 'Classlist', href: `/d2l/lms/classlist/classlist.d2l?ou=${ou}`, icon: I.users },
+        { title: 'Groups', href: `/d2l/le/groups/${ou}/home`, icon: I.users },
+        { title: 'Surveys', href: `/d2l/le/surveys/${ou}/surveys_list.d2l`, icon: svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>') },
       ];
 
       standardLinks.forEach(link => {
@@ -885,7 +1277,7 @@
           icon: I.book
         }));
       return cachedCourses;
-    } catch(e) {
+    } catch (e) {
       return [];
     }
   }
@@ -915,8 +1307,8 @@
       const links = filteredLinks;
       if (e.key === 'Escape') { closeSpotlight(); return; }
       if (e.key === 'ArrowDown') { focusIdx = Math.min(focusIdx + 1, links.length - 1); renderSpotlightResults(input.value, currentLinks, false); e.preventDefault(); }
-      if (e.key === 'ArrowUp')   { focusIdx = Math.max(focusIdx - 1, 0);                renderSpotlightResults(input.value, currentLinks, false); e.preventDefault(); }
-      if (e.key === 'Enter')     { if (links[focusIdx]) { window.location.href = links[focusIdx].href; closeSpotlight(); } e.preventDefault(); }
+      if (e.key === 'ArrowUp') { focusIdx = Math.max(focusIdx - 1, 0); renderSpotlightResults(input.value, currentLinks, false); e.preventDefault(); }
+      if (e.key === 'Enter') { if (links[focusIdx]) { window.location.href = links[focusIdx].href; closeSpotlight(); } e.preventDefault(); }
     });
   }
 
@@ -1037,9 +1429,9 @@
         const text = row.textContent || '';
 
         // Skip header rows and category rows (no score text, no due date)
-        const hasDueDate   = /due on|due:/i.test(text);
-        const hasScore     = /\d+\.?\d*\s*\/\s*\d+/.test(text);                      // "9.43 / 10"
-        const hasGraded    = /★.*graded|graded.*★/i.test(text) || hasScore;
+        const hasDueDate = /due on|due:/i.test(text);
+        const hasScore = /\d+\.?\d*\s*\/\s*\d+/.test(text);                      // "9.43 / 10"
+        const hasGraded = /★.*graded|graded.*★/i.test(text) || hasScore;
         const hasSubmitted = /✓.*submitted|submitted.*✓/i.test(text);
         const notSubmitted = /not submitted/i.test(text);
 
@@ -1117,9 +1509,9 @@
         const qa = document.createElement('div');
         qa.className = 'cl-qa-dropdown';
         qa.innerHTML = [
-          { label: 'Grades',      icon: I.grades, href: `/d2l/lms/grades/my_grades/main.d2l?ou=${itemId}` },
-          { label: 'Assignments', icon: I.upload,  href: `/d2l/lms/dropbox/user/folders_list.d2l?ou=${itemId}` },
-          { label: 'Content',     icon: I.book,    href: `/d2l/le/content/${itemId}/Home` },
+          { label: 'Grades', icon: I.grades, href: `/d2l/lms/grades/my_grades/main.d2l?ou=${itemId}` },
+          { label: 'Assignments', icon: I.upload, href: `/d2l/lms/dropbox/user/folders_list.d2l?ou=${itemId}` },
+          { label: 'Content', icon: I.book, href: `/d2l/le/content/${itemId}/Home` },
         ].map(a => `<a href="${a.href}" class="cl-quick-access-btn cl-qa-drop-btn">${a.icon}<span>${a.label}</span></a>`).join('');
 
         const titleAnchor = item.querySelector('a, [class*="title"], [class*="name"]');
@@ -1188,23 +1580,38 @@
           if (btn) btn.innerHTML = settings.darkMode ? I.sun : I.moon;
         }
       });
-    } catch {}
+    } catch { }
   }
+
+  // Cross-frame sync: when the top window toggles dark mode, sync it across all same-origin iframes
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'clplus_settings' && e.newValue) {
+      try {
+        settings = { ...settings, ...JSON.parse(e.newValue) };
+        applyDarkMode();
+        const btn = document.getElementById('cl-dark-toggle');
+        if (btn) btn.innerHTML = settings.darkMode ? I.sun : I.moon;
+      } catch { }
+    }
+  });
 
   /* ─────────────────────────────────────────────────────────
      INIT
   ───────────────────────────────────────────────────────── */
   function init() {
     applyDarkMode();
-    buildDarkToggle();
-    // QuickNav sidebar removed per user request
-    buildSpotlight();
+    if (window === window.top) {
+      buildDarkToggle();
+      buildSpotlight();
+    }
     buildUIPolish();
 
     setTimeout(() => {
-      buildGradeCalculator();
+      if (window === window.top) {
+        buildGradeCalculator();
+        buildCourseCardQuickAccess();
+      }
       buildAssignmentRowStyle();
-      buildCourseCardQuickAccess();
     }, 700);
   }
 

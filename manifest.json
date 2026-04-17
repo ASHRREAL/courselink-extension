@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CourseLink+",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Better CourseLink.",
   "icons": {
     "16": "icons/icon16.png",
@@ -22,9 +22,16 @@
       "matches": [
         "*://courselink.uoguelph.ca/*"
       ],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
     }
   ],
   "permissions": [
